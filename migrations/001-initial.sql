@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS entries
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(50) NOT NULL,
+    content VARCHAR NOT NULL,
+    spotifyEmbedding VARCHAR NOT NULL
+);

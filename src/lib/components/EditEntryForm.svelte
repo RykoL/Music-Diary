@@ -1,0 +1,47 @@
+<script lang="ts">
+    import type {EntryPresentation} from "$lib/models/EntryResponse";
+    export let entry: EntryPresentation;
+</script>
+
+<div class="prose">
+    <h2>Edit entry</h2>
+</div>
+<form method='post'>
+    <div class="form-control w-full max-w-xs">
+        <label for="title" class="label">
+            <span class="label-text">Title</span>
+        </label>
+        <input type="text" id="title" name="title" class="input input-bordered w-full max-w-xs" placeholder="Title"
+               required value={entry.title}>
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label for="song" class="label">
+            <span class="label-text">Song</span>
+        </label>
+        <input type="url" id="song" name="song" class="input input-bordered w-full max-w-xs"
+               placeholder="https://open.spotify.com/track/6Gi4xccZRKja1w78ZoBs5c?si=b284ff0046c3440" value="{entry.songURL}"required>
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label for="content" class="label">
+            <span class="label-text">Content</span>
+        </label>
+        <textarea id="content" name="content" class="textarea textarea-bordered h-24"
+                  placeholder="Any text you wanna share additionally">{entry.content}</textarea>
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label for="date" class="label">
+            <span class="label-text">Date</span>
+        </label>
+        <input type="date" class="w-full max-w-xs input input-bordered" id="date" name="date" value={entry.date} required/>
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="image">
+            <span class="label-text">Image</span>
+        </label>
+        <input type="file" class="file-input file-input-bordered w-full max-w-xs" id="image" name="image"/>
+    </div>
+
+    <div class="form-control w-full max-w-xs">
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+</form>
