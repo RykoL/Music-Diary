@@ -4,34 +4,31 @@ Music diary is a platform to keep track of the music that has a special place in
 
 ## Features
 
-- Adding diary entries with a picture and the text
-- Adding a spotify link to each diary entry
+- Adding diary entries with text
+- Adding a playable spotify link to each diary entry
 - Playing a preview of the song while reading the entry
 - Deleting diary entries
+- Editing title, date, text and the song associated with it
 
-# create a new project in my-app
-npm create svelte@latest my-app
+## Roadmap (Not prioritized)
+
+- Add one or multiple images to an entry
+- Creating multiple diaries
+- Implement error handling and resiliency measures
+- Implement a deployment strategy
+- Customizable db adapters (at least support postgres)
+- Login via external oidc providers
+- Allow adding other music links like Youtube / Apple Music / Deezer
+
+## Running locally
+
+Install dependencies
+```bash
+npm i
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
+To run locally run following command
+```
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
