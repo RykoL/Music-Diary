@@ -1,4 +1,4 @@
-import {EntryId, Entry} from "$lib/server/domain/models/Entry";
+import {Entry} from "$lib/server/domain/models/Entry";
 import {SpotifyId, SpotifySong, SpotifyURL} from "$lib/server/domain/models/SpotifySong";
 
 export type EntryRow = {
@@ -29,17 +29,17 @@ export class EntryEntity {
     }
 
     public toEntry(): Entry {
-        return new Entry(
-            new EntryId(this.id),
-            this.title,
-            new URL("https://picsum.photos/400/200"),
-            this.content,
-            new SpotifySong(
+        return Entry.builder()
+            .withId(this.id)
+            .title(this.title)
+            .withImages("https://picsum.photos/400/200")
+            .content(this.content)
+            .song(new SpotifySong(
                 new SpotifyId(this.songId),
                 new SpotifyURL(this.url),
                 this.embed
-            ),
-            new Date(this.date)
-        )
+            ))
+            .date(new Date(this.date))
+            .build();
     }
 }

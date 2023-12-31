@@ -1,6 +1,6 @@
 import type {Song} from "$lib/server/domain/models/Song";
-import type {DiaryLocation} from "$lib/server/domain/models/DiaryLocation";
 import {EntryBuilder} from "$lib/server/domain/models/EntryBuilder";
+import type {EntryTitle} from "$lib/server/domain/models/EntryTitle";
 
 export class EntryId {
     constructor(public value: number) {
@@ -11,16 +11,16 @@ export class EntryId {
 export class Entry {
 
     id: EntryId
-    title: string
-    imageURL: URL
+    title: EntryTitle
+    images: Array<URL>
     song: Song
     content: string
     date: Date
 
-    constructor(id: EntryId, title: string, image: URL, content: string, song: Song, date: Date) {
+    constructor(id: EntryId, title: EntryTitle, images: Array<URL>, content: string, song: Song, date: Date) {
         this.id = id
         this.title = title
-        this.imageURL = image
+        this.images = images
         this.song = song
         this.content = content
         this.date = date;
@@ -29,20 +29,4 @@ export class Entry {
     public static builder(): EntryBuilder {
         return new EntryBuilder()
     }
-}
-
-export class EntryWithLocation extends Entry {
-
-    constructor(
-        public id: EntryId,
-        public title: string,
-        public imageURL: URL,
-        public content: string,
-        public song: Song,
-        public date: Date,
-        public location: DiaryLocation
-    ) {
-        super(id, title, imageURL, content, song, date)
-    }
-
 }

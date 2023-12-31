@@ -12,7 +12,7 @@
     export let data: PageData;
 </script>
 <Navbar>
-    <a class="btn btn-ghost normal-case text-xl" href="/diary">My music diary</a>
+    <a class="btn btn-ghost normal-case text-xl col-start-2" href="/diary">My music diary</a>
     <div class="flex justify-end col-start-3">
         <button class="btn btn-circle btn-primary btn-md" aria-label="Add new entry" on:click={showModal}>
             +

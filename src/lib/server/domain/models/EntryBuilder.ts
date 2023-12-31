@@ -1,15 +1,23 @@
-import {type Entry, EntryId, Entry} from "$lib/server/domain/models/Entry";
+import {EntryId, Entry} from "$lib/server/domain/models/Entry";
 import type {SpotifySong} from "$lib/server/domain/models/SpotifySong";
+import {EntryTitle} from "$lib/server/domain/models/EntryTitle";
 
 
 export class EntryBuilder {
 
-    _song: SpotifySong | undefined;
-    _title: string = "";
-    _content: string = "";
-    _date: Date = new Date()
-    _image: URL = new URL("https://picsum.photos/400/200")
+    //@ts-expect-error Cannot actually be undefined
+    private _song: SpotifySong;
+    //@ts-expect-error Cannot actually be undefined
+    private _title: EntryTitle;
+    private _content: string = "";
+    private _date: Date = new Date()
+    private _images: Array<URL> = []
+    private _id: EntryId = new EntryId(0);
 
+    public withId(id: number) {
+        this._id = new EntryId(id)
+        return this;
+    }
     public song(spotifySong: SpotifySong): EntryBuilder {
         this._song = spotifySong;
         return this;
@@ -21,7 +29,7 @@ export class EntryBuilder {
     }
 
     title(title: string): EntryBuilder {
-        this._title = title
+        this._title = new EntryTitle(title)
         return this
     }
 
@@ -30,22 +38,12 @@ export class EntryBuilder {
         return this
     }
 
-    image(imageURL: URL): EntryBuilder {
-        this._image = imageURL
+    withImages(...images: Array<string>): EntryBuilder {
+        this._images = images.map(img => new URL(img))
         return this
     }
 
     build(): Entry {
-        if (!this._song) {
-            throw new Error("Cannot construct diary entry without a Song")
-        }
-        return new Entry(
-            new EntryId(0),
-            this._title,
-            this._image,
-            this._content,
-            this._song,
-            this._date
-        )
+        return new Entry(this._id, this._title, this._images, this._content, this._song, this._date)
     }
 }
