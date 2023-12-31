@@ -6,7 +6,7 @@
 <div class="prose">
     <h2>New entry</h2>
 </div>
-<form method={method} action="diary">
+<form method={method} action="/diary">
     <div class="form-control w-full max-w-xs">
         <label for="title" class="label">
             <span class="label-text">Title</span>
@@ -41,7 +41,7 @@
         <input type="file" class="file-input file-input-bordered w-full max-w-xs" id="image" name="image"/>
     </div>
 
-    <div class="form-control w-full max-w-xs">
-        <button type="submit" class="btn btn-primary">Create</button>
+    <div class="form-control w-full max-w-xs mt-6">
+        <button type="submit" class="btn btn-primary w-10/12 mx-auto">Create</button>
     </div>
 </form>
