@@ -1,5 +1,9 @@
 export class SpotifyURL{
     constructor(public value: string) {
+        const url = new URL(value);
+        if (url.hostname !== 'open.spotify.com') {
+            throw new Error(`${value} is not a valid spotify url.`)
+        }
     }
 
     public getId(): SpotifyId {
