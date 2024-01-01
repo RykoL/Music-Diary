@@ -38,7 +38,7 @@
         <label class="label" for="image">
             <span class="label-text">Image</span>
         </label>
-        <input type="file" class="file-input file-input-bordered w-full max-w-xs" id="image" name="image"/>
+        <input type="file" class="file-input file-input-bordered file-input-md w-full max-w-xs" id="images" name="images" multiple/>
     </div>
 
     <div class="form-control w-full max-w-xs mt-6">

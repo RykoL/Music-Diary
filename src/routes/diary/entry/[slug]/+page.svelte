@@ -23,13 +23,13 @@
         <Link href="/diary/entry/{data.entry.id}/edit">Edit</Link>
     </span>
 </Navbar>
-<main class="container mx-auto flex flex-col gap-2">
+<main class="container h-max mx-auto flex flex-col gap-2">
     <Carousel imageURLs={imageURLs}/>
     <div class="px-4">
-        <p>{formattedDate}</p>
-        <section class="my-2">
+        <section class="my-2 prose prose-lg">
             <p>{data.entry.content}</p>
         </section>
         <div>{@html data.entry.embedURL}</div>
+        <p class="relative bottom-0">{formattedDate}</p>
     </div>
 </main>
