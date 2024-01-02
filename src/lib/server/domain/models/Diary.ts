@@ -1,4 +1,4 @@
-import type {Entry} from "$lib/domain/models/Entry";
+import type {Entry} from "$lib/server/domain/models/Entry";
 
 export class DiaryId {
     constructor(public value: number) {}

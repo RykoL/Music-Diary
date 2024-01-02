@@ -1,6 +1,7 @@
 import {EntryId, Entry} from "$lib/server/domain/models/Entry";
 import type {SpotifySong} from "$lib/server/domain/models/SpotifySong";
 import {EntryTitle} from "$lib/server/domain/models/EntryTitle";
+import type {Image} from "$lib/server/domain/models/Image";
 
 
 export class EntryBuilder {
@@ -11,7 +12,7 @@ export class EntryBuilder {
     private _title: EntryTitle;
     private _content: string = "";
     private _date: Date = new Date()
-    private _images: Array<URL> = []
+    private _images: Array<Image> = []
     private _id: EntryId = new EntryId(0);
 
     public withId(id: number) {
@@ -38,8 +39,8 @@ export class EntryBuilder {
         return this
     }
 
-    withImages(...images: Array<string>): EntryBuilder {
-        this._images = images.map(img => new URL(img))
+    withImages(...images: Array<Image>): EntryBuilder {
+        this._images = images
         return this
     }
 

@@ -1,4 +1,5 @@
 import {Entry} from "$lib/server/domain/models/Entry";
+import {Image} from "$lib/server/domain/models/Image";
 import {SpotifyId, SpotifySong, SpotifyURL} from "$lib/server/domain/models/SpotifySong";
 
 export type EntryRow = {
@@ -32,7 +33,7 @@ export class EntryEntity {
         return Entry.builder()
             .withId(this.id)
             .title(this.title)
-            .withImages("https://picsum.photos/400/200")
+            .withImages(new Image("some-id", new URL("https://picsum.photos/400/200")))
             .content(this.content)
             .song(new SpotifySong(
                 new SpotifyId(this.songId),

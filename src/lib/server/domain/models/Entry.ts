@@ -1,6 +1,7 @@
 import type {Song} from "$lib/server/domain/models/Song";
 import {EntryBuilder} from "$lib/server/domain/models/EntryBuilder";
 import type {EntryTitle} from "$lib/server/domain/models/EntryTitle";
+import type {Image} from "$lib/server/domain/models/Image";
 
 export class EntryId {
     constructor(public value: number) {
@@ -12,12 +13,12 @@ export class Entry {
 
     id: EntryId
     title: EntryTitle
-    images: Array<URL>
+    images: Array<Image>
     song: Song
     content: string
     date: Date
 
-    constructor(id: EntryId, title: EntryTitle, images: Array<URL>, content: string, song: Song, date: Date) {
+    constructor(id: EntryId, title: EntryTitle, images: Array<Image>, content: string, song: Song, date: Date) {
         this.id = id
         this.title = title
         this.images = images
