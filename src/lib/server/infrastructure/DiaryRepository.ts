@@ -1,5 +1,5 @@
 import type {Database} from "sqlite";
-import {EntryEntity, type EntryRow} from "$lib/server/entity/EntryEntity";
+import {EntryMapper, type EntryRow} from "$lib/server/entity/EntryEntity";
 import type {Entry, EntryId} from "$lib/server/domain/models/Entry";
 
 export class DiaryRepository {
@@ -10,22 +10,28 @@ export class DiaryRepository {
         this.db = db
     }
 
-    public async getDiaryEntries(): Promise<Array<EntryEntity>> {
+    public async getDiaryEntries(): Promise<Array<Entry>> {
         const entries = await this.db.all<EntryRow[]>(`
-            SELECT entries.id as entryId, title, content, date, song.id as songId, url, embed FROM entries 
+            SELECT entries.id as entryId, title, content, date, song.id as songId, url, embed, image.id as imageId FROM entries 
             JOIN song on song.id = entries.songId
-            ORDER BY date DESC LIMIT 10;
+            LEFT JOIN image on entries.id = image.entry_id                                                                     
+            ORDER BY date DESC;
         `);
-        return entries.map(EntryEntity.fromRow)
+        const entryMap = new Map<number,EntryRow[]>()
+        entries.forEach((row) => {
+            entryMap.set(row.entryId, [...entryMap.get(row.entryId) ?? [], row])
+        })
+        return Array.from(entryMap.values()).map(EntryMapper)
     }
 
-    public async getEntryById(entryId: EntryId): Promise<EntryEntity | undefined> {
-        const entry = await this.db.get<EntryRow>(`
-            SELECT entries.id as entryId, title, content, date, song.id as songId, url, embed FROM entries 
+    public async getEntryById(entryId: EntryId): Promise<Entry | undefined> {
+        const entry = await this.db.all<EntryRow[]>(`
+            SELECT entries.id as entryId, title, content, date, song.id as songId, url, embed, image.id as imageId FROM entries 
             JOIN song on song.id = entries.songId
+            LEFT JOIN image on entries.id = image.entry_id
             where entries.id = ?;`, entryId.value);
         if (entry) {
-            return EntryEntity.fromRow(entry)
+            return EntryMapper(entry)
         }
     }
 
@@ -33,7 +39,8 @@ export class DiaryRepository {
         const songQuery: string = "INSERT OR IGNORE INTO song(id, url, embed) VALUES (?, ?, ?);"
 
         const query: string = `INSERT INTO entries(title, content, date, songId)
-                               VALUES (?, ?, ?, ?);`
+                               VALUES (?, ?, ?, ?) RETURNING id;`
+        const imageQuery: string = `INSERT INTO image(id, entry_id) VALUES (?, ?);`
         try {
             await this.db.run("BEGIN TRANSACTION;")
             await this.db.run(songQuery, [
@@ -41,12 +48,15 @@ export class DiaryRepository {
                 newEntry.song.spotifyURL.value,
                 newEntry.song.html,
             ])
-            await this.db.run(query, [
-                newEntry.title,
+            const entryId = await this.db.get<{id: number}>(query, [
+                newEntry.title.value,
                 newEntry.content,
                 newEntry.date,
                 newEntry.song.id.value
             ])
+            await Promise.all(newEntry.images.map((img) => {
+                return this.db.run(imageQuery, [img.id.value, entryId?.id])
+            }))
             await this.db.run("COMMIT;")
         } catch (e) {
             await this.db.run("ROLLBACK")

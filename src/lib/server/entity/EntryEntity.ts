@@ -1,5 +1,5 @@
 import {Entry} from "$lib/server/domain/models/Entry";
-import {Image} from "$lib/server/domain/models/Image";
+import {Image, ImageId} from "$lib/server/domain/models/Image";
 import {SpotifyId, SpotifySong, SpotifyURL} from "$lib/server/domain/models/SpotifySong";
 
 export type EntryRow = {
@@ -10,37 +10,28 @@ export type EntryRow = {
     songId: string
     url: string
     embed: string
+    imageId: string | null
 }
 
-export class EntryEntity {
+export const EntryMapper = (rows: EntryRow[]): Entry => {
+    const row = rows[0]
+    const images = rows
+        .filter(r => r.imageId !== null)
+        .map(r => new Image(
+            new ImageId(r.imageId!),
+            new URL(`http://localhost:5173/${r.imageId}`))
+        )
 
-    constructor(
-        public id: number,
-        public title: string,
-        public content: string,
-        public embed: string,
-        public date: string,
-        public songId: string,
-        public url: string
-    ) {
-    }
-
-    public static fromRow(row: EntryRow): EntryEntity {
-        return new EntryEntity(row['entryId'], row['title'], row['content'], row['embed'], row['date'], row['songId'], row['url'])
-    }
-
-    public toEntry(): Entry {
-        return Entry.builder()
-            .withId(this.id)
-            .title(this.title)
-            .withImages(new Image("some-id", new URL("https://picsum.photos/400/200")))
-            .content(this.content)
-            .song(new SpotifySong(
-                new SpotifyId(this.songId),
-                new SpotifyURL(this.url),
-                this.embed
-            ))
-            .date(new Date(this.date))
-            .build();
-    }
+    return Entry.builder()
+        .withId(row['entryId'])
+        .title(row['title'])
+        .withImages(...images)
+        .content(row['content'])
+        .song(new SpotifySong(
+            new SpotifyId(row['songId']),
+            new SpotifyURL(row['url']),
+            row['embed']
+        ))
+        .date(new Date(row['date']))
+        .build();
 }

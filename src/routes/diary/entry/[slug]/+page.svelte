@@ -24,7 +24,7 @@
     </span>
 </Navbar>
 <main class="container h-max mx-auto flex flex-col gap-2">
-    <Carousel imageURLs={imageURLs}/>
+    <Carousel imageURLs={data.entry.imageURLs}/>
     <div class="px-4">
         <section class="my-2 prose prose-lg">
             <p>{data.entry.content}</p>
@@ -32,4 +32,7 @@
         <div>{@html data.entry.embedURL}</div>
         <p class="relative bottom-0">{formattedDate}</p>
     </div>
+    <form action="?/delete" method="post">
+        <button class="btn btn-error">Delete</button>
+    </form>
 </main>

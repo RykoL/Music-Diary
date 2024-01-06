@@ -22,17 +22,21 @@
 
 
 <div class="carousel w-full">
-    {#each imageURLs as image, i}
-        <div id="slide{i}" class="carousel-item relative w-full">
-            {#if i === 0}
-                <img src={image} alt="entry {i}" class="w-full" loading="eager">
-            {:else}
-                <img src={image} alt="entry {i}" class="w-full" loading="lazy">
-            {/if}
-            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#slide{calculatePreviousIndex(i, length)}" class="btn btn-circle">❮</a>
-                <a href="#slide{calculateNextIndex(i, length)}" class="btn btn-circle">❯</a>
+    {#if imageURLs.length > 1}
+        {#each imageURLs as image, i}
+            <div id="slide{i}" class="carousel-item relative w-full">
+                {#if i === 0}
+                    <img src={image} alt="entry {i}" class="w-full" loading="eager">
+                {:else}
+                    <img src={image} alt="entry {i}" class="w-full" loading="lazy">
+                {/if}
+                <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                    <a href="#slide{calculatePreviousIndex(i, length)}" class="btn btn-circle">❮</a>
+                    <a href="#slide{calculateNextIndex(i, length)}" class="btn btn-circle">❯</a>
+                </div>
             </div>
-        </div>
-    {/each}
+        {/each}
+    {:else }
+        <img src="https://picsum.photos/400/200" alt="showing an entry" class="w-full">
+    {/if}
 </div>

@@ -2,34 +2,37 @@ import type {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import type {AddNewEntryRequest} from "$lib/server/domain/models/inbound/AddNewEntryRequest";
 import {getSpotifyEmbed} from "$lib/server/infrastructure/SpotifyRepository";
 import {Entry, EntryId} from "$lib/server/domain/models/Entry";
+import {Image} from "$lib/server/domain/models/Image";
 import type {UpdateEntryRequest} from "$lib/server/domain/models/inbound/UpdateEntry";
+import {uploadImage} from "$lib/server/service/ImageUploadService";
 
 
 export class DiaryService {
     constructor(private repository: DiaryRepository) {}
 
     public async getAllEntries(): Promise<Entry[]> {
-        return (await this.repository.getDiaryEntries()).map(entry => entry.toEntry())
+        return await this.repository.getDiaryEntries()
     }
 
     async addNewEntry(newEntry: AddNewEntryRequest) {
         const embedding = await getSpotifyEmbed(newEntry.song)
+        const images = await Promise.all(newEntry.images.map(imgFile => {
+            return uploadImage(imgFile)
+        }))
         const entry = Entry
             .builder()
             .song(embedding)
             .title(newEntry.title)
             .content(newEntry.content)
             .date(newEntry.date)
+            .withImages(...images)
             .build();
 
         await this.repository.addNewEntry(entry)
     }
 
     async getEntryById(entryId: EntryId) {
-        const entryEntity =  await this.repository.getEntryById(entryId);
-        if (entryEntity) {
-            return entryEntity.toEntry()
-        }
+        return await this.repository.getEntryById(entryId);
     }
 
     async updateEntry(updateEntry: UpdateEntryRequest): Promise<Entry> {

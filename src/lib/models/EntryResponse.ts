@@ -3,7 +3,7 @@ export type EntryPresentation = {
     id: number
     title: string
     content: string
-    imageURL: string
+    imageURLs: Array<string>
     songURL: string
     embedURL: string
     date: string
