@@ -1,6 +1,10 @@
 import type {Database} from "sqlite";
-import {EntryMapper, type EntryRow} from "$lib/server/entity/EntryEntity";
+import {mapSingleEntry, type EntryRecord, mapEntries} from "$lib/server/entity/EntryMapper";
 import type {Entry, EntryId} from "$lib/server/domain/models/Entry";
+
+import type {DiaryId} from "$lib/server/domain/models/DiaryId";
+import type {Diary} from "$lib/server/domain/models/Diary";
+import {DiaryMapper, type DiaryRecord} from "$lib/server/entity/DiaryMapper";
 
 export class DiaryRepository {
 
@@ -11,7 +15,7 @@ export class DiaryRepository {
     }
 
     public async getDiaryEntries(): Promise<Array<Entry>> {
-        const entry = await this.db.all<EntryRow[]>(`
+        const entry = await this.db.all<EntryRecord[]>(`
             SELECT entry.id as entryId,
                    title,
                    content,
@@ -25,15 +29,11 @@ export class DiaryRepository {
                      LEFT JOIN image on entry.id = image.entry_id
             ORDER BY date DESC;
         `);
-        const entryMap = new Map<number, EntryRow[]>()
-        entry.forEach((row) => {
-            entryMap.set(row.entryId, [...entryMap.get(row.entryId) ?? [], row])
-        })
-        return Array.from(entryMap.values()).map(EntryMapper)
+        return mapEntries(entry)
     }
 
     public async getEntryById(entryId: EntryId): Promise<Entry | undefined> {
-        const entry = await this.db.all<EntryRow[]>(`
+        const entry = await this.db.all<EntryRecord[]>(`
             SELECT entry.id as entryId,
                    title,
                    content,
@@ -47,8 +47,31 @@ export class DiaryRepository {
                      LEFT JOIN image on entry.id = image.entry_id
             where entry.id = ?;`, entryId.value);
         if (entry) {
-            return EntryMapper(entry)
+            return mapSingleEntry(entry)
         }
+    }
+
+    public async getDiaryById(diaryId: DiaryId): Promise<Diary | undefined> {
+        const records = await this.db.all<DiaryRecord[]>(`
+            SELECT diary.id          as diaryId,
+                   diary.title       as diaryTitle,
+                   diary.description as diaryDescription,
+                   entry.id          as entryId,
+                   entry.title       as entryTitle,
+                   content,
+                   date,
+                   song.id           as songId,
+                   url,
+                   embed,
+                   image.id          as imageId
+            FROM diary
+                     JOIN entry on diary.id = entry.diaryId
+                     JOIN song on song.id = entry.songId
+                     LEFT JOIN image on entry.id = image.entry_id
+            WHERE diary.id = ?
+            ORDER BY date DESC;
+        `, diaryId.value);
+        return DiaryMapper(records)
     }
 
     async addNewEntry(newEntry: Entry) {
@@ -78,7 +101,6 @@ export class DiaryRepository {
             await this.db.run("COMMIT;")
         } catch (e) {
             await this.db.run("ROLLBACK")
-            console.log(e)
         }
     }
 
@@ -114,7 +136,6 @@ export class DiaryRepository {
             await this.db.run("COMMIT;")
         } catch (e) {
             await this.db.run("ROLLBACK")
-            console.log(e)
         }
     }
 }

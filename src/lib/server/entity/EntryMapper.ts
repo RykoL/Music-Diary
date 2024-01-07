@@ -2,9 +2,9 @@ import {Entry} from "$lib/server/domain/models/Entry";
 import {AttachedImage, ImageId} from "$lib/server/domain/models/Image";
 import {SpotifyId, SpotifySong, SpotifyURL} from "$lib/server/domain/models/SpotifySong";
 
-export type EntryRow = {
+export type EntryRecord = {
     entryId: number,
-    title: string,
+    entryTitle: string,
     content: string,
     date: string
     songId: string
@@ -13,7 +13,14 @@ export type EntryRow = {
     imageId: string | null
 }
 
-export const EntryMapper = (rows: EntryRow[]): Entry => {
+export const mapEntries = (rows: EntryRecord[]): Entry[] => {
+    const entryMap = new Map<number, EntryRecord[]>()
+    rows.forEach((row) => {
+        entryMap.set(row.entryId, [...entryMap.get(row.entryId) ?? [], row])
+    })
+    return Array.from(entryMap.values()).map(mapSingleEntry)
+}
+export const mapSingleEntry = (rows: EntryRecord[]): Entry => {
     const row = rows[0]
     const images = rows
         .filter(r => r.imageId !== null)
@@ -24,7 +31,7 @@ export const EntryMapper = (rows: EntryRow[]): Entry => {
 
     return Entry.builder()
         .withId(row['entryId'])
-        .title(row['title'])
+        .title(row['entryTitle'])
         .withImages(...images)
         .content(row['content'])
         .song(new SpotifySong(

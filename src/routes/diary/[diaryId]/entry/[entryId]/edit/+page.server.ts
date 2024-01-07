@@ -1,22 +1,24 @@
-import type {PageLoad} from './$types';
+import type {Actions, PageLoad} from './$types';
 import {DiaryService} from "$lib/server/service/DiaryService";
 import {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
 import {entryToPresentation} from "$lib/server/domain/mapper/EntryMapper";
 import {EntryId} from "$lib/server/domain/models/Entry";
 import {fail, redirect} from "@sveltejs/kit";
-import type {Actions} from "../../../../../../.svelte-kit/types/src/routes/diary/entry/[slug]/$types";
 import {UpdateEntryRequest} from "$lib/server/domain/models/inbound/UpdateEntry";
+import {DiaryId} from "$lib/server/domain/models/DiaryId";
 
 export const load: PageLoad = async ({params}) => {
     const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
-    const entryId = new EntryId(parseInt(params.slug))
-    const entry = await diaryService.getEntryById(entryId)
+    const entryId = new EntryId(parseInt(params.entryId))
+    const diaryId = new DiaryId(params.diaryId)
+    const entry = await diaryService.getEntryById(diaryId, entryId)
     if (entry === undefined) {
         return fail(404)
     }
 
     return {
+        diaryId: diaryId.value,
         entry: entryToPresentation(entry)
     }
 };

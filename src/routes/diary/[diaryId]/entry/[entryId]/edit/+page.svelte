@@ -15,7 +15,7 @@
 </script>
 
 <Navbar>
-    <Link href="/diary/0/entry/{data.entry.id}">Back</Link>
+    <Link href="/diary/{data.diaryId}/entry/{data.entry.id}">Back</Link>
     <div class="prose text-center">
         <h3>Edit</h3>
     </div>

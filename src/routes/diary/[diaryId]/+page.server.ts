@@ -5,12 +5,24 @@ import {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
 import {AddNewEntryRequest} from "$lib/server/domain/models/inbound/AddNewEntryRequest";
 import {fail, redirect} from "@sveltejs/kit";
+import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import type {DiaryPresentation} from "$lib/models/DiaryPresentation";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({params}) => {
     const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
+    const diaryId = new DiaryId(params.diaryId)
+    const diary = await diaryService.getDiaryById(diaryId)
+
+    if (!diary) {
+        return fail(404)
+    }
+
     return {
-        entries: mapToEntryListResponse(await diaryService.getAllEntries())
-    };
+        id: diary.id.value,
+        title: diary.title,
+        description: diary.description,
+        entries: mapToEntryListResponse(diary.entries)
+    } as DiaryPresentation;
 };
 
 export const actions = {

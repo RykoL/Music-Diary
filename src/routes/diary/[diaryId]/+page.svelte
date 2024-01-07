@@ -21,7 +21,7 @@
 </Navbar>
 <section class="container flex flex-col gap-5 mt-2">
     {#each data.entries as entry}
-        <EntryCard entry={entry}/>
+        <EntryCard entry={entry} diaryId="{data.id}"/>
     {/each}
 </section>
 <dialog id="new-entry-modal" class="modal" bind:this={dialog}>

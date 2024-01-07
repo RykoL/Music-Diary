@@ -2,9 +2,15 @@ import type {Song} from "$lib/server/domain/models/Song";
 import {EntryBuilder} from "$lib/server/domain/models/EntryBuilder";
 import type {EntryTitle} from "$lib/server/domain/models/EntryTitle";
 import {AttachedImage, type Image, UnattachedImage} from "$lib/server/domain/models/Image";
+import {ValueObject} from "$lib/server/domain/models/ValueObject";
 
-export class EntryId {
+export class EntryId extends ValueObject<number>{
     constructor(public value: number) {
+        super(value)
+    }
+
+    public equals(id: EntryId): boolean {
+        return this.value === id.value
     }
 }
 
