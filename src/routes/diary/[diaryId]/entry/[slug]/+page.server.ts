@@ -9,12 +9,15 @@ import {fail, redirect} from "@sveltejs/kit";
 export const load: PageLoad = async ({params}) => {
     const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
     const entryId = new EntryId(parseInt(params.slug))
+    const diaryId: string = params.diaryId
     const entry = await diaryService.getEntryById(entryId)
     if (entry === undefined) {
         return fail(404)
     }
+
     return {
-        entry: entryToPresentation(entry)
+        entry: entryToPresentation(entry),
+        diaryId
     }
 };
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {browser} from "$app/environment";
     import type {EntryPresentation} from "$lib/models/EntryResponse";
     import {formatDateString} from "$lib/utils.js";
 
@@ -14,7 +13,7 @@
     }
 </style>
 
-<a href="diary/entry/{entry.id}" class="w-fit mx-auto">
+<a href="/diary/0/entry/{entry.id}" class="w-fit mx-auto">
     <article class="card w-96 bg-base-100 shadow-xl card-bordered card-visibility">
         <figure class="card-container"><img loading="lazy" src={previewImageURL} class="image-full"
                                             alt="description of whats happening in here"/></figure>
