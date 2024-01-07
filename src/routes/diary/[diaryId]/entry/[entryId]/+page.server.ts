@@ -8,7 +8,7 @@ import {fail, redirect} from "@sveltejs/kit";
 
 export const load: PageLoad = async ({params}) => {
     const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
-    const entryId = new EntryId(parseInt(params.slug))
+    const entryId = new EntryId(parseInt(params.entryId))
     const diaryId: string = params.diaryId
     const entry = await diaryService.getEntryById(entryId)
     if (entry === undefined) {
@@ -24,7 +24,7 @@ export const load: PageLoad = async ({params}) => {
 export const actions = {
     delete: async (event) => {
         const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
-        const entryId = new EntryId(parseInt(event.params.slug));
+        const entryId = new EntryId(parseInt(event.params.entryId));
 
         await diaryService.deleteEntry(entryId)
 

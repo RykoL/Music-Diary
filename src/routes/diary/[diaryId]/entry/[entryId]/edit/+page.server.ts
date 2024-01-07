@@ -24,7 +24,7 @@ export const load: PageLoad = async ({params}) => {
 export const actions = {
     edit: async (event) => {
         const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
-        const entryId = new EntryId(parseInt(event.params.slug));
+        const entryId = new EntryId(parseInt(event.params.entryId));
         const updateEntry = UpdateEntryRequest.fromForm(entryId, await event.request.formData())
 
         if (!updateEntry) {
@@ -39,7 +39,7 @@ export const actions = {
         const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
         const data = await event.request.formData()
         const imgFile = data.get('image') as File;
-        const entryId = new EntryId(parseInt(event.params.slug));
+        const entryId = new EntryId(parseInt(event.params.entryId));
 
         if (imgFile) {
             await diaryService.attachImageToEntry(entryId, imgFile)
