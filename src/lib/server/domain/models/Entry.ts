@@ -1,7 +1,7 @@
 import type {Song} from "$lib/server/domain/models/Song";
 import {EntryBuilder} from "$lib/server/domain/models/EntryBuilder";
 import type {EntryTitle} from "$lib/server/domain/models/EntryTitle";
-import type {Image} from "$lib/server/domain/models/Image";
+import {AttachedImage, type Image, UnattachedImage} from "$lib/server/domain/models/Image";
 
 export class EntryId {
     constructor(public value: number) {
@@ -13,7 +13,7 @@ export class Entry {
 
     id: EntryId
     title: EntryTitle
-    images: Array<Image>
+    private images: Array<Image>
     song: Song
     content: string
     date: Date
@@ -29,5 +29,17 @@ export class Entry {
 
     public static builder(): EntryBuilder {
         return new EntryBuilder()
+    }
+
+    public attachNewImage(img: UnattachedImage) {
+        this.images.push(img)
+    }
+
+    public getUnAttachedImages(): Array<UnattachedImage> {
+        return this.images.filter(img => img instanceof UnattachedImage)
+    }
+
+    public getAttachedImages(): Array<AttachedImage> {
+        return this.images.filter(img => img instanceof AttachedImage) as Array<AttachedImage>
     }
 }

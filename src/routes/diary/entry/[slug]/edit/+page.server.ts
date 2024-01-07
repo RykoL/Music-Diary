@@ -22,7 +22,7 @@ export const load: PageLoad = async ({params}) => {
 };
 
 export const actions = {
-    default: async (event) => {
+    edit: async (event) => {
         const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
         const entryId = new EntryId(parseInt(event.params.slug));
         const updateEntry = UpdateEntryRequest.fromForm(entryId, await event.request.formData())
@@ -31,8 +31,20 @@ export const actions = {
             return fail(400)
         }
 
-        await diaryService.updateEntry(updateEntry)
+        await diaryService.editEntry(updateEntry)
 
         throw redirect(303, "/diary")
+    },
+    'attach-image': async (event) => {
+        const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
+        const data = await event.request.formData()
+        const imgFile = data.get('image') as File;
+        const entryId = new EntryId(parseInt(event.params.slug));
+
+        if (imgFile) {
+            await diaryService.attachImageToEntry(entryId, imgFile)
+        }
+
+        return {success: true}
     }
 } satisfies Actions

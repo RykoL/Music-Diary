@@ -7,7 +7,7 @@ export const entryToPresentation = (entry: Entry): EntryPresentation => {
         id: entry.id.value,
         title: entry.title.value,
         content: entry.content,
-        imageURLs: entry.images.map(it => it.publicURL.toString()),
+        imageURLs: entry.getAttachedImages().map(it => it.publicURL.toString()),
         songURL: entry.song.spotifyURL.value,
         embedURL: entry.song.html,
         date: entry.date.toISOString().substring(0, 10)

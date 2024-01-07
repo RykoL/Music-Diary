@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {enhance} from '$app/forms'
     import type {EntryPresentation} from "$lib/models/EntryResponse";
 
     export let entry: EntryPresentation;
@@ -7,7 +8,7 @@
     export let hasChanged: () => void;
 </script>
 
-<form method='post' id={formId}>
+<form method='post' action="?/edit" id={formId}>
     <div class="form-control">
         <label for="title" class="label">
             <span class="label-text">Title</span>
@@ -38,11 +39,14 @@
         <input type="date" class="w-full input input-bordered" id="date" name="date" value={entry.date}
                required on:change={hasChanged}/>
     </div>
+</form>
+<form action="?/attach-image" method="post" enctype="multipart/form-data" use:enhance>
     <div class="form-control w-full">
         <label class="label" for="image">
             <span class="label-text">Image</span>
         </label>
-        <input type="file" class="file-input file-input-bordered w-full" id="image" name="image"
-               on:change={hasChanged}/>
+        <input type="file" class="file-input file-input-bordered w-full" id="image" name="image" accept="image/*"
+               required/>
     </div>
+    <button class="btn btn-primary">Attach new Image</button>
 </form>

@@ -3,6 +3,7 @@
     import EditEntryForm from "$lib/components/EditEntryForm.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import Link from "$lib/components/Link.svelte";
+    import Carousel from "$lib/components/Carousel.svelte";
 
     export let data: PageData;
     let formId: string = 'editEntryForm';
@@ -28,6 +29,9 @@
         </button>
     {/if}
 </Navbar>
-<main class="px-2 py-2">
-    <EditEntryForm entry={data.entry} formId={formId} hasChanged={onChange}/>
+<main class="flex flex-col py-2">
+    <Carousel imageURLs={data.entry.imageURLs}/>
+    <section class="px-4">
+        <EditEntryForm entry={data.entry} formId={formId} hasChanged={onChange}/>
+    </section>
 </main>

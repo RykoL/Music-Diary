@@ -11,10 +11,16 @@ export class ImageId {
     }
 }
 
-export class Image {
+export type Image = AttachedImage | UnattachedImage
+
+export class AttachedImage {
     constructor(
         public id: ImageId,
         public publicURL: URL
     ) {
     }
+}
+
+export class UnattachedImage {
+    constructor(public id: ImageId) {}
 }

@@ -2,13 +2,13 @@ import type {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import type {AddNewEntryRequest} from "$lib/server/domain/models/inbound/AddNewEntryRequest";
 import {getSpotifyEmbed} from "$lib/server/infrastructure/SpotifyRepository";
 import {Entry, EntryId} from "$lib/server/domain/models/Entry";
-import {Image} from "$lib/server/domain/models/Image";
 import type {UpdateEntryRequest} from "$lib/server/domain/models/inbound/UpdateEntry";
 import {uploadImage} from "$lib/server/service/ImageUploadService";
 
 
 export class DiaryService {
-    constructor(private repository: DiaryRepository) {}
+    constructor(private repository: DiaryRepository) {
+    }
 
     public async getAllEntries(): Promise<Entry[]> {
         return await this.repository.getDiaryEntries()
@@ -31,12 +31,21 @@ export class DiaryService {
         await this.repository.addNewEntry(entry)
     }
 
+    async attachImageToEntry(entryId: EntryId, imgFile: File) {
+        const entry = await this.getEntryById(entryId);
+        if (entry) {
+            const img = await uploadImage(imgFile)
+            entry.attachNewImage(img)
+            await this.repository.updateEntry(entry)
+        }
+    }
+
     async getEntryById(entryId: EntryId) {
         return await this.repository.getEntryById(entryId);
     }
 
-    async updateEntry(updateEntry: UpdateEntryRequest): Promise<Entry> {
-       const entry = await this.getEntryById(updateEntry.id)
+    async editEntry(updateEntry: UpdateEntryRequest): Promise<Entry> {
+        const entry = await this.getEntryById(updateEntry.id)
 
         if (!entry) {
             throw new Error(`Entry with id ${updateEntry.id.value} does not exist`)

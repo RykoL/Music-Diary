@@ -1,5 +1,5 @@
 import {Entry} from "$lib/server/domain/models/Entry";
-import {Image, ImageId} from "$lib/server/domain/models/Image";
+import {AttachedImage, ImageId} from "$lib/server/domain/models/Image";
 import {SpotifyId, SpotifySong, SpotifyURL} from "$lib/server/domain/models/SpotifySong";
 
 export type EntryRow = {
@@ -17,7 +17,7 @@ export const EntryMapper = (rows: EntryRow[]): Entry => {
     const row = rows[0]
     const images = rows
         .filter(r => r.imageId !== null)
-        .map(r => new Image(
+        .map(r => new AttachedImage(
             new ImageId(r.imageId!),
             new URL(`http://localhost:5173/${r.imageId}`))
         )

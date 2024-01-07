@@ -71,6 +71,7 @@ export class DiaryRepository {
     async updateEntry(entry: Entry) {
         const songQuery: string = "INSERT OR IGNORE INTO song(id, url, embed) VALUES (?, ?, ?);"
 
+        const imageQuery: string = "INSERT OR IGNORE INTO image VALUES (?, ?);"
         const query: string = `UPDATE entries
                                SET title = ?, content = ?, date = ?, songId = ?
                                WHERE id = ?;`
@@ -82,12 +83,13 @@ export class DiaryRepository {
                 entry.song.html,
             ])
             await this.db.run(query, [
-                entry.title,
+                entry.title.value,
                 entry.content,
                 entry.date,
                 entry.song.id.value,
                 entry.id.value
             ])
+            await Promise.all(entry.getUnAttachedImages().map(img => this.db.run(imageQuery, [entry.id.value, img.id.value])))
             await this.db.run("COMMIT;")
         } catch (e) {
             await this.db.run("ROLLBACK")
