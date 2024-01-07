@@ -9,11 +9,12 @@ Music diary is a platform to keep track of the music that has a special place in
 - Playing a preview of the song while reading the entry
 - Deleting diary entries
 - Editing title, date, text and the song associated with it
+- Add one or multiple images to an entry
 
 ## Roadmap (Not prioritized)
 
-- Add one or multiple images to an entry
 - Creating multiple diaries
+- Allow for turning diary public
 - Implement error handling and resiliency measures
 - Implement a deployment strategy
 - Customizable db adapters (at least support postgres)
