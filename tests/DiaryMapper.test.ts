@@ -1,24 +1,7 @@
 import {DiaryMapper, type DiaryRecord} from "$lib/server/entity/DiaryMapper";
 import {Diary} from "$lib/server/domain/models/Diary";
 import {DiaryId} from "$lib/server/domain/models/DiaryId";
-import {Entry} from "$lib/server/domain/models/Entry";
-import {AttachedImage, ImageId} from "$lib/server/domain/models/Image";
-import {SpotifyId, SpotifySong, SpotifyURL} from "$lib/server/domain/models/SpotifySong";
-
-const baseRecord: DiaryRecord = {
-    diaryId: "58f7daa7-6b1e-4400-b94a-5f44f1d810f7",
-    diaryTitle: "My music diary",
-    diaryDescription: "This is your first diary.",
-    content: "This is the content of the entry",
-    date: "2023-12-01",
-    embed: "<iframe></iframe>",
-    entryId: 0,
-    imageId: "ca3321fe-5e3a-48d4-9356-d98579a258d9",
-    songId: "0kNrFAHWyp1ffdT6SslgAf",
-    entryTitle: "Vaction in Andalusia",
-    url: "https://open.spotify.com/track/0kNrFAHWyp1ffdT6SslgAf?si=8ba194b8033f4306"
-
-}
+import {aFirstEntry, aSecondEntry, baseRecord} from "./fixtures";
 
 test("maps diary id from record", () => {
     const record: DiaryRecord = {
@@ -67,30 +50,33 @@ test("maps diary description from record", () => {
 })
 
 test("maps entry from record", () => {
-    const entry = Entry
-        .builder()
-        .withId(baseRecord.entryId)
-        .content(baseRecord.content)
-        .title(baseRecord.entryTitle)
-        .withImages(new AttachedImage(
-            new ImageId(baseRecord.imageId!),
-            new URL(`http://localhost:5173/${baseRecord.imageId}`)
-        ))
-        .date(new Date(baseRecord.date))
-        .song(new SpotifySong(
-            new SpotifyId(baseRecord.songId),
-            new SpotifyURL(baseRecord.url),
-            baseRecord.embed
-        ))
-        .build()
 
     const diary = new Diary(
         new DiaryId(baseRecord.diaryId),
         baseRecord.diaryTitle,
         baseRecord.diaryDescription,
-        [entry]
+        [aFirstEntry]
     )
 
     const actual = DiaryMapper([baseRecord])
     expect(diary.entries).toStrictEqual(actual.entries)
+})
+
+test("maps multiple entries from record without duplicates", () => {
+
+    const expected = new Diary(
+        new DiaryId(baseRecord.diaryId),
+        baseRecord.diaryTitle,
+        baseRecord.diaryDescription,
+        [aFirstEntry, aSecondEntry]
+    )
+
+    const records: Array<DiaryRecord> = [
+       baseRecord,
+        {...baseRecord, entryId: 1, entryTitle: 'Second'}
+    ]
+
+    const actual = DiaryMapper(records)
+    expect(actual.entries.length).toEqual(2)
+    expect(expected.entries).toStrictEqual(actual.entries)
 })

@@ -29,14 +29,15 @@ export const actions = {
     default: async (event) => {
         const db = await DatabaseFactory.connect()
         const diaryService = new DiaryService(new DiaryRepository(db))
+        const diaryId = new DiaryId(event.params.diaryId)
         const newEntry = AddNewEntryRequest.fromForm(await event.request.formData())
         if (newEntry) {
-            await diaryService.addNewEntry(newEntry)
+            await diaryService.addEntryToDiary(diaryId, newEntry)
         } else {
             console.error("Validation of form data failed")
             return fail(400)
         }
 
-        throw redirect(303, "/diary")
+        throw redirect(303, `/diary/${diaryId.value}`)
     },
 } satisfies Actions;

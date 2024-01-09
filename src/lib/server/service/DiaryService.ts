@@ -13,10 +13,16 @@ export class DiaryService {
     }
 
     public async getDiaryById(diaryId: DiaryId): Promise<Diary | undefined> {
-       return await this.repository.getDiaryById(diaryId);
+        return await this.repository.getDiaryById(diaryId);
     }
 
-    async addNewEntry(newEntry: AddNewEntryRequest) {
+    async addEntryToDiary(diaryId: DiaryId, newEntry: AddNewEntryRequest) {
+        const diary = await this.repository.getDiaryById(diaryId)
+
+        if (!diary) {
+            throw Error(`Diary with id ${diaryId.value} not found`)
+        }
+
         const embedding = await getSpotifyEmbed(newEntry.song)
         const images = await Promise.all(newEntry.images.map(imgFile => {
             return uploadImage(imgFile)
@@ -30,7 +36,8 @@ export class DiaryService {
             .withImages(...images)
             .build();
 
-        await this.repository.addNewEntry(entry)
+        diary.addEntry(entry)
+        await this.repository.saveDiary(diary);
     }
 
     async attachImageToEntry(entryId: EntryId, imgFile: File) {

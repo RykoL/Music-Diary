@@ -4,11 +4,6 @@ import Navbar from "$lib/components/Navbar.svelte";
 
 <Navbar>
     <a class="btn btn-ghost normal-case text-xl col-start-2" href="/diary">Your diaries</a>
-    <div class="flex justify-end col-start-3">
-        <button class="btn btn-circle btn-primary btn-md" aria-label="Add new entry" on:click={showModal}>
-            +
-        </button>
-    </div>
 </Navbar>
 <main class="container mx-auto flex w-full">
     <div class="card w-96 bg-base-100 shadow-xl image-full mx-auto">

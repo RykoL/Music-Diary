@@ -14,24 +14,6 @@ export class DiaryRepository {
         this.db = db
     }
 
-    public async getDiaryEntries(): Promise<Array<Entry>> {
-        const entry = await this.db.all<EntryRecord[]>(`
-            SELECT entry.id as entryId,
-                   title,
-                   content,
-                   date,
-                   song.id  as songId,
-                   url,
-                   embed,
-                   image.id as imageId
-            FROM entry
-                     JOIN song on song.id = entry.songId
-                     LEFT JOIN image on entry.id = image.entry_id
-            ORDER BY date DESC;
-        `);
-        return mapEntries(entry)
-    }
-
     public async getEntryById(entryId: EntryId): Promise<Entry | undefined> {
         const entry = await this.db.all<EntryRecord[]>(`
             SELECT entry.id as entryId,
@@ -74,36 +56,6 @@ export class DiaryRepository {
         return DiaryMapper(records)
     }
 
-    async addNewEntry(newEntry: Entry) {
-        const songQuery: string = "INSERT OR IGNORE INTO song(id, url, embed) VALUES (?, ?, ?);"
-
-        const query: string = `INSERT INTO entry(title, content, date, songId)
-                               VALUES (?, ?, ?, ?)
-                               RETURNING id;`
-        const imageQuery: string = `INSERT INTO image(id, entry_id)
-                                    VALUES (?, ?);`
-        try {
-            await this.db.run("BEGIN TRANSACTION;")
-            await this.db.run(songQuery, [
-                newEntry.song.id.value,
-                newEntry.song.spotifyURL.value,
-                newEntry.song.html,
-            ])
-            const entryId = await this.db.get<{ id: number }>(query, [
-                newEntry.title.value,
-                newEntry.content,
-                newEntry.date,
-                newEntry.song.id.value
-            ])
-            await Promise.all(newEntry.getUnAttachedImages().map((img) => {
-                return this.db.run(imageQuery, [img.id.value, entryId?.id])
-            }))
-            await this.db.run("COMMIT;")
-        } catch (e) {
-            await this.db.run("ROLLBACK")
-        }
-    }
-
     async removeEntry(entryId: EntryId) {
         await this.db.run("DELETE from entry where id = ?", entryId.value)
     }
@@ -136,6 +88,40 @@ export class DiaryRepository {
             await this.db.run("COMMIT;")
         } catch (e) {
             await this.db.run("ROLLBACK")
+        }
+    }
+
+    async saveDiary(diary: Diary) {
+        const songQuery: string = "INSERT OR IGNORE INTO song(id, url, embed) VALUES (?, ?, ?);"
+
+        const query: string = `INSERT INTO entry(title, content, date, songId, diaryId)
+                               VALUES (?, ?, ?, ?, ?)
+                               RETURNING id;`
+        const imageQuery: string = `INSERT INTO image(id, entry_id)
+                                    VALUES (?, ?);`
+
+        for (const newEntry of diary.getNewEntries()) {
+            try {
+                await this.db.run("BEGIN TRANSACTION;")
+                await this.db.run(songQuery, [
+                    newEntry.song.id.value,
+                    newEntry.song.spotifyURL.value,
+                    newEntry.song.html,
+                ])
+                const entryId = await this.db.get<{ id: number }>(query, [
+                    newEntry.title.value,
+                    newEntry.content,
+                    newEntry.date,
+                    newEntry.song.id.value,
+                    diary.id.value
+                ])
+                await Promise.all(newEntry.getUnAttachedImages().map((img) => {
+                    return this.db.run(imageQuery, [img.id.value, entryId?.id])
+                }))
+                await this.db.run("COMMIT;")
+            } catch (e) {
+                await this.db.run("ROLLBACK")
+            }
         }
     }
 }

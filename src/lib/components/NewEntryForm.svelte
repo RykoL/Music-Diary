@@ -1,12 +1,7 @@
-<script lang="ts">
-    type Method = "post" | "dialog";
-    export let method: Method;
-</script>
-
 <div class="prose">
     <h2>New entry</h2>
 </div>
-<form method={method} action="/diary" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
     <div class="form-control w-full max-w-xs">
         <label for="title" class="label">
             <span class="label-text">Title</span>

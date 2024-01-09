@@ -11,7 +11,7 @@
         <div class="max-w-md text-white">
             <h1 class="text-5xl font-bold">Music diary</h1>
             <p class="py-6">Capture your memories alongside the music you listened to.</p>
-            <a href="/diary" class="btn btn-primary">Create your diary</a>
+            <a href="/diaries" class="btn btn-primary">Create your diary</a>
         </div>
     </div>
 </header>

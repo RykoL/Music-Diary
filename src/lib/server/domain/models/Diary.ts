@@ -23,6 +23,11 @@ export class Diary {
         return this._entries.find(e => e.id.equals(id))
     }
 
+    public getNewEntries(): Array<Entry> {
+        throw new Error("oy you missed an implementation here");
+        return this._entries
+    }
+
     get entries() {
         return this._entries
     }
