@@ -12,6 +12,7 @@ test("maps diary id from record", () => {
     const expected = new Diary(
         new DiaryId("abc"),
         "",
+        "",
         []
     )
     const actual = DiaryMapper([record])
@@ -27,6 +28,7 @@ test("maps diary title from record", () => {
     const expected = new Diary(
         new DiaryId("abc"),
         "Some title",
+        "",
         []
     )
     const actual = DiaryMapper([record])
@@ -79,4 +81,27 @@ test("maps multiple entries from record without duplicates", () => {
     const actual = DiaryMapper(records)
     expect(actual.entries.length).toEqual(2)
     expect(expected.entries).toStrictEqual(actual.entries)
+})
+
+test("construct diary with empty entries if entryId is null", () => {
+    const record: DiaryRecord = {
+        diaryId: "58f7daa7-6b1e-4400-b94a-5f44f1d810f7",
+        diaryTitle: "My music diary",
+        diaryDescription: "This is your first diary.",
+        content: "",
+        date: "",
+        embed: "",
+        entryId: null,
+        imageId: "",
+        songId: "",
+        entryTitle: "",
+        url: "",
+    }
+
+    const records: Array<DiaryRecord> = [
+        record,
+    ]
+
+    const actual = DiaryMapper(records)
+    expect(actual.entries.length).toEqual(0)
 })

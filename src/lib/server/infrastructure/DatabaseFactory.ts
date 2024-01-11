@@ -8,7 +8,7 @@ export class DatabaseFactory {
     private static isMigrated: boolean = false;
 
     static async connect(): Promise<Database<sqlite3.Database, Statement>> {
-        const dbNameToUse = env.NODE_ENV === 'test' ? 'test_diary.sqlite3' : this.dbName
+        const dbNameToUse = env.NODE_ENV === 'test' ? ':memory:' : this.dbName
         const db = await open({filename: dbNameToUse, driver: sqlite3.cached.Database})
         await db.migrate({
             migrationsPath: "./migrations/"
