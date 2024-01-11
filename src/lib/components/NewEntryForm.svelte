@@ -35,7 +35,6 @@
         </label>
         <input type="file" class="file-input file-input-bordered file-input-md w-full max-w-xs" id="images" name="images" multiple/>
     </div>
-
     <div class="form-control w-full max-w-xs mt-6">
         <button type="submit" class="btn btn-primary w-10/12 mx-auto">Create</button>
     </div>

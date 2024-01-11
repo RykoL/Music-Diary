@@ -10,6 +10,7 @@ export type EntryRecord = {
     songId: string
     url: string
     embed: string
+    diaryId: string
     imageId: string | null
 }
 
@@ -31,6 +32,7 @@ export const mapSingleEntry = (rows: EntryRecord[]): Entry => {
 
     return Entry.builder()
         .withId(row['entryId'])
+        .withDiaryId(row['diaryId'])
         .title(row['entryTitle'])
         .withImages(...images)
         .content(row['content'])

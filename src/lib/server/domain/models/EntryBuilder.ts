@@ -2,6 +2,7 @@ import {EntryId, Entry} from "$lib/server/domain/models/Entry";
 import type {SpotifySong} from "$lib/server/domain/models/SpotifySong";
 import {EntryTitle} from "$lib/server/domain/models/EntryTitle";
 import type {Image} from "$lib/server/domain/models/Image";
+import {DiaryId} from "$lib/server/domain/models/DiaryId";
 
 
 export class EntryBuilder {
@@ -14,6 +15,7 @@ export class EntryBuilder {
     private _date: Date = new Date()
     private _images: Array<Image> = []
     private _id: EntryId = new EntryId(0);
+    private _diaryId = new DiaryId('')
 
     public withId(id: number) {
         this._id = new EntryId(id)
@@ -45,6 +47,11 @@ export class EntryBuilder {
     }
 
     build(): Entry {
-        return new Entry(this._id, this._title, this._images, this._content, this._song, this._date)
+        return new Entry(this._id, this._diaryId, this._title, this._images, this._content, this._song, this._date)
+    }
+
+    withDiaryId(diaryId: string): EntryBuilder {
+        this._diaryId = new DiaryId(diaryId)
+        return this
     }
 }

@@ -47,8 +47,8 @@ export class DiaryRepository {
                    embed,
                    image.id          as imageId
             FROM diary
-                     JOIN entry on diary.id = entry.diaryId
-                     JOIN song on song.id = entry.songId
+                     LEFT JOIN entry on diary.id = entry.diaryId
+                     LEFT JOIN song on song.id = entry.songId
                      LEFT JOIN image on entry.id = image.entry_id
             WHERE diary.id = ?
             ORDER BY date DESC;
