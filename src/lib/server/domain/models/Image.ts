@@ -22,5 +22,6 @@ export class AttachedImage {
 }
 
 export class UnattachedImage {
-    constructor(public id: ImageId) {}
+    constructor(public id: ImageId,
+                public file: File) {}
 }

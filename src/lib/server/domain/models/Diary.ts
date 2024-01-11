@@ -1,5 +1,6 @@
-import type {Entry, EntryId} from "$lib/server/domain/models/Entry";
+import {Entry, type EntryId} from "$lib/server/domain/models/Entry";
 import type {DiaryId} from "$lib/server/domain/models/DiaryId";
+import type {EntryDraft} from "$lib/server/domain/models/inbound/EntryDraft";
 
 export class Diary {
 
@@ -15,17 +16,24 @@ export class Diary {
         this._entries = entries
     }
 
-    public addEntry(entry: Entry): void {
-       this._entries.push(entry)
+    public writeEntry(draft: EntryDraft): Entry {
+        const entry =  Entry
+            .builder()
+            .title(draft.title)
+            .content(draft.content)
+            .date(draft.date)
+            .build();
+
+        entry.attachImages(...draft.images)
+        entry.linkSong(draft.song)
+
+        this._entries.push(entry)
+
+        return entry
     }
 
     public getEntry(id: EntryId): Entry | undefined {
         return this._entries.find(e => e.id.equals(id))
-    }
-
-    public getNewEntries(): Array<Entry> {
-        throw new Error("oy you missed an implementation here");
-        return this._entries
     }
 
     get entries() {

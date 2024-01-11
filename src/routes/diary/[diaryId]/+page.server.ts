@@ -3,7 +3,7 @@ import {mapToEntryListResponse} from "$lib/server/domain/mapper/EntryMapper";
 import {DiaryService} from "$lib/server/service/DiaryService";
 import {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
-import {AddNewEntryRequest} from "$lib/server/domain/models/inbound/AddNewEntryRequest";
+import {EntryDraft} from "$lib/server/domain/models/inbound/EntryDraft";
 import {fail, redirect} from "@sveltejs/kit";
 import { DiaryId } from '$lib/server/domain/models/DiaryId';
 import type {DiaryPresentation} from "$lib/models/DiaryPresentation";
@@ -30,7 +30,7 @@ export const actions = {
         const db = await DatabaseFactory.connect()
         const diaryService = new DiaryService(new DiaryRepository(db))
         const diaryId = new DiaryId(event.params.diaryId)
-        const newEntry = AddNewEntryRequest.fromForm(await event.request.formData())
+        const newEntry = EntryDraft.fromForm(await event.request.formData())
         if (newEntry) {
             await diaryService.addEntryToDiary(diaryId, newEntry)
         } else {

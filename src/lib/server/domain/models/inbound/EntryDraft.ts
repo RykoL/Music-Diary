@@ -1,6 +1,6 @@
 import {SpotifyURL} from "$lib/server/domain/models/SpotifySong";
 
-export class AddNewEntryRequest {
+export class EntryDraft {
     constructor(
         public title: string,
         public content: string,
@@ -9,7 +9,7 @@ export class AddNewEntryRequest {
         public images: File[]
     ) {}
 
-    public static fromForm(data: FormData): AddNewEntryRequest | undefined {
+    public static fromForm(data: FormData): EntryDraft | undefined {
         const title: string = data.get('title') as string
         const content: string = data.get('content') as string
         const song: string = data.get('song') as string
@@ -23,7 +23,7 @@ export class AddNewEntryRequest {
         })
 
         if (title && content && song && rawDate) {
-            return new AddNewEntryRequest(
+            return new EntryDraft(
                 title,
                 content,
                 new SpotifyURL(song),

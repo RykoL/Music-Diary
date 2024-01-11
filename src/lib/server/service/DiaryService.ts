@@ -1,11 +1,12 @@
 import type {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
-import type {AddNewEntryRequest} from "$lib/server/domain/models/inbound/AddNewEntryRequest";
-import {getSpotifyEmbed} from "$lib/server/infrastructure/SpotifyRepository";
-import {Entry, EntryId} from "$lib/server/domain/models/Entry";
+import type {EntryDraft} from "$lib/server/domain/models/inbound/EntryDraft";
+import {updateSongEmbedding} from "$lib/server/infrastructure/SpotifyRepository";
+import type {Entry, EntryId} from "$lib/server/domain/models/Entry";
 import type {UpdateEntryRequest} from "$lib/server/domain/models/inbound/UpdateEntry";
-import {uploadImage} from "$lib/server/service/ImageUploadService";
+import {uploadImage, uploadImages} from "$lib/server/service/ImageUploadService";
 import type {Diary} from "$lib/server/domain/models/Diary";
 import type {DiaryId} from "$lib/server/domain/models/DiaryId";
+import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
 
 
 export class DiaryService {
@@ -16,35 +17,28 @@ export class DiaryService {
         return await this.repository.getDiaryById(diaryId);
     }
 
-    async addEntryToDiary(diaryId: DiaryId, newEntry: AddNewEntryRequest) {
+    async addEntryToDiary(diaryId: DiaryId, newEntry: EntryDraft) {
         const diary = await this.repository.getDiaryById(diaryId)
 
         if (!diary) {
             throw Error(`Diary with id ${diaryId.value} not found`)
         }
 
-        const embedding = await getSpotifyEmbed(newEntry.song)
-        const images = await Promise.all(newEntry.images.map(imgFile => {
-            return uploadImage(imgFile)
-        }))
-        const entry = Entry
-            .builder()
-            .song(embedding)
-            .title(newEntry.title)
-            .content(newEntry.content)
-            .date(newEntry.date)
-            .withImages(...images)
-            .build();
+        const entry = diary.writeEntry(newEntry)
 
-        diary.addEntry(entry)
-        await this.repository.saveDiary(diary);
+        await uploadImages(...entry.getUnAttachedImages())
+
+        await this.repository.saveEntry(entry);
+
+        const db = await DatabaseFactory.connect()
+        await updateSongEmbedding(db, entry.song)
     }
 
     async attachImageToEntry(entryId: EntryId, imgFile: File) {
         const entry = await this.repository.getEntryById(entryId);
         if (entry) {
-            const img = await uploadImage(imgFile)
-            entry.attachNewImage(img)
+            const img = entry.attachNewImage(imgFile)
+            await uploadImage(img)
             await this.repository.updateEntry(entry)
         }
     }
@@ -61,12 +55,10 @@ export class DiaryService {
             throw new Error(`Entry with id ${updateEntry.id.value} does not exist`)
         }
 
-        entry.title = updateEntry.title
-        entry.content = updateEntry.content
-        entry.date = updateEntry.date
+        entry.rewrite(updateEntry.title, updateEntry.content, updateEntry.date)
 
-        if (!entry.song.isSameSong(updateEntry.song.getId())) {
-            entry.song = await getSpotifyEmbed(updateEntry.song)
+        if (!entry.hasSong(updateEntry.song.getId())) {
+            entry.linkSong(updateEntry.song)
         }
 
         await this.repository.updateEntry(entry)

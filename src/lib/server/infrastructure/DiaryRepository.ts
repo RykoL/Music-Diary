@@ -91,7 +91,7 @@ export class DiaryRepository {
         }
     }
 
-    async saveDiary(diary: Diary) {
+    async saveEntry(newEntry: Entry) {
         const songQuery: string = "INSERT OR IGNORE INTO song(id, url, embed) VALUES (?, ?, ?);"
 
         const query: string = `INSERT INTO entry(title, content, date, songId, diaryId)
@@ -100,28 +100,26 @@ export class DiaryRepository {
         const imageQuery: string = `INSERT INTO image(id, entry_id)
                                     VALUES (?, ?);`
 
-        for (const newEntry of diary.getNewEntries()) {
-            try {
-                await this.db.run("BEGIN TRANSACTION;")
-                await this.db.run(songQuery, [
-                    newEntry.song.id.value,
-                    newEntry.song.spotifyURL.value,
-                    newEntry.song.html,
-                ])
-                const entryId = await this.db.get<{ id: number }>(query, [
-                    newEntry.title.value,
-                    newEntry.content,
-                    newEntry.date,
-                    newEntry.song.id.value,
-                    diary.id.value
-                ])
-                await Promise.all(newEntry.getUnAttachedImages().map((img) => {
-                    return this.db.run(imageQuery, [img.id.value, entryId?.id])
-                }))
-                await this.db.run("COMMIT;")
-            } catch (e) {
-                await this.db.run("ROLLBACK")
-            }
+        try {
+            await this.db.run("BEGIN TRANSACTION;")
+            await this.db.run(songQuery, [
+                newEntry.song.id.value,
+                newEntry.song.spotifyURL.value,
+                newEntry.song.html,
+            ])
+            const entryId = await this.db.get<{ id: number }>(query, [
+                newEntry.title.value,
+                newEntry.content,
+                newEntry.date,
+                newEntry.song.id.value,
+                newEntry.id.value
+            ])
+            await Promise.all(newEntry.getUnAttachedImages().map((img) => {
+                return this.db.run(imageQuery, [img.id.value, entryId?.id])
+            }))
+            await this.db.run("COMMIT;")
+        } catch (e) {
+            await this.db.run("ROLLBACK")
         }
     }
 }
