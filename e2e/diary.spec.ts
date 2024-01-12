@@ -9,5 +9,6 @@ test("create a diary", async ( {page}) => {
     await page.getByLabel('Description').fill('Diary used for testing');
     await page.getByRole('button', {name: 'Create'}).click()
 
-    await expect(page.getByText('Your diaries')).toBeVisible()
+    await expect(page.getByText('Test diary')).toBeVisible()
+    await expect(page.getByText('Diary used for testing')).toBeVisible()
 })

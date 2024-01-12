@@ -8,7 +8,17 @@ export type DiaryRecord = {
     diaryDescription: string
 } & EntryRecord
 
-export const DiaryMapper = (records: DiaryRecord[]): Diary => {
+export const mapDiaries = (records: DiaryRecord[]): Diary[] => {
+    const entityMap = new Map<string, DiaryRecord[]>()
+    records.forEach((row) => {
+        if (row.diaryId) {
+            entityMap.set(row.diaryId, [...entityMap.get(row.diaryId) ?? [], row])
+        }
+    })
+    return Array.from(entityMap.values()).map(diaryMapper)
+}
+
+export const diaryMapper = (records: DiaryRecord[]): Diary => {
     const firstRecord = records[0]
     const entries = mapEntries(records)
     return new Diary(

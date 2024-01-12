@@ -69,4 +69,8 @@ export class DiaryService {
     async deleteEntry(entryId: EntryId) {
         await this.repository.removeEntry(entryId)
     }
+
+    async listDiaries(): Promise<Array<Diary>> {
+        return await this.repository.getDiaries()
+    }
 }

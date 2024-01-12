@@ -1,10 +1,12 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
+    import type {PageData} from './$types'
 
     let dialog: HTMLDialogElement;
     const showModal = () => {
         dialog.showModal()
     }
+    export let data: PageData;
 </script>
 
 <Navbar>
@@ -39,15 +41,18 @@
     </div>
 </dialog>
 <main class="container mx-auto flex flex-col w-full">
-    <div class="card w-96 bg-base-100 shadow-xl image-full mx-auto">
-        <figure><img src="https://picsum.photos/400/200" alt="diary"/></figure>
-        <div class="card-body">
-            <h2 class="card-title">My music diary</h2>
-            <p>This is your first diary</p>
-            <div class="card-actions justify-end">
-                <a href="/diary/c2383d72-53f4-4a8b-b09f-fa416d4fcb8e" class="btn btn-primary">Open Now</a>
+
+    {#each data.diaries as diary }
+        <div class="card w-96 bg-base-100 shadow-xl image-full mx-auto">
+            <figure><img src="https://picsum.photos/400/200" alt="diary"/></figure>
+            <div class="card-body">
+                <h2 class="card-title">{diary.title}</h2>
+                <p>{diary.description}</p>
+                <div class="card-actions justify-end">
+                    <a href="/diary/${diary.id}" class="btn btn-primary">Open Now</a>
+                </div>
             </div>
         </div>
-    </div>
+    {/each}
     <button class="btn btn-primary" on:click={showModal}>Start new diary</button>
 </main>

@@ -4,7 +4,7 @@ import type {Entry, EntryId} from "$lib/server/domain/models/Entry";
 
 import type {DiaryId} from "$lib/server/domain/models/DiaryId";
 import type {Diary} from "$lib/server/domain/models/Diary";
-import {DiaryMapper, type DiaryRecord} from "$lib/server/entity/DiaryMapper";
+import {diaryMapper, type DiaryRecord, mapDiaries} from "$lib/server/entity/DiaryMapper";
 
 export class DiaryRepository {
 
@@ -53,7 +53,7 @@ export class DiaryRepository {
             WHERE diary.id = ?
             ORDER BY date DESC;
         `, diaryId.value);
-        return DiaryMapper(records)
+        return diaryMapper(records)
     }
 
     async removeEntry(entryId: EntryId) {
@@ -121,5 +121,10 @@ export class DiaryRepository {
         } catch (e) {
             await this.db.run("ROLLBACK")
         }
+    }
+
+    async getDiaries(): Promise<Array<Diary>> {
+        const records = await this.db.all<Array<DiaryRecord>>('SELECT id as diaryId, title as diaryTitle, description as diaryDescription from diary;')
+        return mapDiaries(records);
     }
 }

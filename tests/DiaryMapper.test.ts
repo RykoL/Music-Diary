@@ -1,4 +1,4 @@
-import {DiaryMapper, type DiaryRecord} from "$lib/server/entity/DiaryMapper";
+import {diaryMapper, type DiaryRecord} from "$lib/server/entity/DiaryMapper";
 import {Diary} from "$lib/server/domain/models/Diary";
 import {DiaryId} from "$lib/server/domain/models/DiaryId";
 import {aFirstEntry, aSecondEntry, baseRecord} from "./fixtures";
@@ -15,7 +15,7 @@ test("maps diary id from record", () => {
         "",
         []
     )
-    const actual = DiaryMapper([record])
+    const actual = diaryMapper([record])
     expect(expected.id).toEqual(actual.id)
 })
 
@@ -31,7 +31,7 @@ test("maps diary title from record", () => {
         "",
         []
     )
-    const actual = DiaryMapper([record])
+    const actual = diaryMapper([record])
     expect(expected.title).toEqual(actual.title)
 })
 
@@ -47,7 +47,7 @@ test("maps diary description from record", () => {
         "Some description",
         []
     )
-    const actual = DiaryMapper([record])
+    const actual = diaryMapper([record])
     expect(expected.description).toEqual(actual.description)
 })
 
@@ -60,7 +60,7 @@ test("maps entry from record", () => {
         [aFirstEntry]
     )
 
-    const actual = DiaryMapper([baseRecord])
+    const actual = diaryMapper([baseRecord])
     expect(diary.entries).toStrictEqual(actual.entries)
 })
 
@@ -78,7 +78,7 @@ test("maps multiple entries from record without duplicates", () => {
         {...baseRecord, entryId: 1, entryTitle: 'Second'}
     ]
 
-    const actual = DiaryMapper(records)
+    const actual = diaryMapper(records)
     expect(actual.entries.length).toEqual(2)
     expect(expected.entries).toStrictEqual(actual.entries)
 })
@@ -102,6 +102,6 @@ test("construct diary with empty entries if entryId is null", () => {
         record,
     ]
 
-    const actual = DiaryMapper(records)
+    const actual = diaryMapper(records)
     expect(actual.entries.length).toEqual(0)
 })

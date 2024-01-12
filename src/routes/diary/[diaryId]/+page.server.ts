@@ -13,8 +13,6 @@ export const load: PageServerLoad = async ({params}) => {
     const diaryId = new DiaryId(params.diaryId)
     const diary = await diaryService.getDiaryById(diaryId)
 
-    console.log(diary)
-
     if (!diary) {
         return fail(404)
     }
