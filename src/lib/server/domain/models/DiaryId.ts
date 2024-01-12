@@ -1,5 +1,14 @@
+import {randomUUID} from "node:crypto";
+
 export class DiaryId {
-    constructor(public value: string) {
+
+    value: string
+    constructor(value?: string) {
+        if (!value) {
+            this.value = randomUUID()
+        } else {
+            this.value = value
+        }
     }
 
     public equals(id: DiaryId): boolean {

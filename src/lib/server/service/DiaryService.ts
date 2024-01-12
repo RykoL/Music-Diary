@@ -7,6 +7,8 @@ import {uploadImage, uploadImages} from "$lib/server/service/ImageUploadService"
 import type {Diary} from "$lib/server/domain/models/Diary";
 import type {DiaryId} from "$lib/server/domain/models/DiaryId";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
+import type {NewDiary} from "$lib/server/domain/models/inbound/NewDiary";
+import {User} from "$lib/server/domain/models/User";
 
 
 export class DiaryService {
@@ -15,6 +17,10 @@ export class DiaryService {
 
     public async getDiaryById(diaryId: DiaryId): Promise<Diary | undefined> {
         return await this.repository.getDiaryById(diaryId);
+    }
+
+    public async listDiaryEntries(diaryId: DiaryId): Promise<Entry[]> {
+        return await this.repository.getEntriesByDiaryId(diaryId);
     }
 
     async addEntryToDiary(diaryId: DiaryId, newEntry: EntryDraft) {
@@ -72,5 +78,12 @@ export class DiaryService {
 
     async listDiaries(): Promise<Array<Diary>> {
         return await this.repository.getDiaries()
+    }
+
+    async startNewDiary(newDiary: NewDiary) {
+        const user = User.anonymous();
+        const diary = user.startNewDiary(newDiary.title, newDiary.description)
+
+        await this.repository.saveDiary(diary)
     }
 }

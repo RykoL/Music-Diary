@@ -19,6 +19,7 @@ export class Diary {
     public writeEntry(draft: EntryDraft): Entry {
         const entry =  Entry
             .builder()
+            .withDiaryId(this.id.value)
             .title(draft.title)
             .content(draft.content)
             .date(draft.date)

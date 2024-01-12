@@ -33,6 +33,25 @@ export class DiaryRepository {
         }
     }
 
+    public async getEntriesByDiaryId(diaryId: DiaryId): Promise<Entry[]> {
+        const records = await this.db.all<EntryRecord[]>(`
+            SELECT entry.id    as entryId,
+                   entry.title as entryTitle,
+                   content,
+                   date,
+                   song.id     as songId,
+                   url,
+                   embed,
+                   image.id    as imageId
+            FROM entry
+                     LEFT JOIN song on song.id = entry.songId
+                     LEFT JOIN image on entry.id = image.entry_id
+            WHERE entry.diaryId = ?
+            ORDER BY date DESC;
+        `, diaryId.value);
+        return mapEntries(records)
+    }
+
     public async getDiaryById(diaryId: DiaryId): Promise<Diary | undefined> {
         const records = await this.db.all<DiaryRecord[]>(`
             SELECT diary.id          as diaryId,
@@ -112,7 +131,7 @@ export class DiaryRepository {
                 newEntry.content,
                 newEntry.date,
                 newEntry.song.id.value,
-                newEntry.id.value
+                newEntry.diaryId.value
             ])
             await Promise.all(newEntry.getUnAttachedImages().map((img) => {
                 return this.db.run(imageQuery, [img.id.value, entryId?.id])
@@ -126,5 +145,9 @@ export class DiaryRepository {
     async getDiaries(): Promise<Array<Diary>> {
         const records = await this.db.all<Array<DiaryRecord>>('SELECT id as diaryId, title as diaryTitle, description as diaryDescription from diary;')
         return mapDiaries(records);
+    }
+
+    async saveDiary(diary: Diary) {
+        await this.db.run('INSERT INTO diary VALUES (?, ?, ?);', [diary.id.value, diary.title, diary.description])
     }
 }

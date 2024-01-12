@@ -40,7 +40,7 @@
         </form>
     </div>
 </dialog>
-<main class="container mx-auto flex flex-col w-full">
+<main class="container mx-auto flex flex-col w-full gap-3 mt-3">
 
     {#each data.diaries as diary }
         <div class="card w-96 bg-base-100 shadow-xl image-full mx-auto">
@@ -49,7 +49,7 @@
                 <h2 class="card-title">{diary.title}</h2>
                 <p>{diary.description}</p>
                 <div class="card-actions justify-end">
-                    <a href="/diary/${diary.id}" class="btn btn-primary">Open Now</a>
+                    <a href="/diary/{diary.id}" class="btn btn-primary">Open Now</a>
                 </div>
             </div>
         </div>
