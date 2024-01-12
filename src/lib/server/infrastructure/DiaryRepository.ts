@@ -150,4 +150,8 @@ export class DiaryRepository {
     async saveDiary(diary: Diary) {
         await this.db.run('INSERT INTO diary VALUES (?, ?, ?);', [diary.id.value, diary.title, diary.description])
     }
+
+    async removeDiary(diaryId: DiaryId) {
+        await this.db.run('DELETE FROM diary where id = ?', [diaryId.value])
+    }
 }

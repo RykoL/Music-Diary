@@ -86,4 +86,8 @@ export class DiaryService {
 
         await this.repository.saveDiary(diary)
     }
+
+    async deleteDiary(diaryId: DiaryId) {
+        await this.repository.removeDiary(diaryId)
+    }
 }

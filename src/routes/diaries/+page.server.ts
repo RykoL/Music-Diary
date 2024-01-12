@@ -5,6 +5,7 @@ import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
 import type {Diary} from "$lib/server/domain/models/Diary";
 import {toPresentation} from "$lib/server/domain/mapper/DiaryMapper";
 import {NewDiary} from "$lib/server/domain/models/inbound/NewDiary";
+import {DiaryId} from "$lib/server/domain/models/DiaryId";
 
 export const load: PageServerLoad = async () => {
     const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
@@ -15,9 +16,15 @@ export const load: PageServerLoad = async () => {
 }
 
 export const actions = {
-    default: async ({request}) => {
+    startDiary: async ({request}) => {
         const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
         const newDiary = new NewDiary(await request.formData())
         await diaryService.startNewDiary(newDiary)
+    },
+    delete: async ({request}) => {
+        const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
+        const diaryId = new DiaryId((await request.formData()).get('diaryId') as string)
+
+        await diaryService.deleteDiary(diaryId)
     }
 } as Actions
