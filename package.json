@@ -35,6 +35,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@auth/core": "^0.20.0",
+    "@auth/sveltekit": "^0.5.2",
     "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.16",
     "daisyui": "^3.9.4",
