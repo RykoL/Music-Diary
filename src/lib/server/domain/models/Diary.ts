@@ -1,6 +1,6 @@
 import {Entry, type EntryId} from "$lib/server/domain/models/Entry";
 import type {DiaryId} from "$lib/server/domain/models/DiaryId";
-import type {EntryDraft} from "$lib/server/domain/models/inbound/EntryDraft";
+import type {EntryDraft} from "$lib/server/domain/inbound/EntryDraft";
 
 export class Diary {
 

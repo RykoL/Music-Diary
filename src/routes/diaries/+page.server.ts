@@ -1,11 +1,12 @@
-import type {Actions, PageServerLoad} from "@sveltejs/kit";
+import type {Actions} from "@sveltejs/kit";
 import {DiaryService} from "$lib/server/service/DiaryService";
 import {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
 import type {Diary} from "$lib/server/domain/models/Diary";
 import {toPresentation} from "$lib/server/domain/mapper/DiaryMapper";
-import {NewDiary} from "$lib/server/domain/models/inbound/NewDiary";
+import {NewDiary} from "$lib/server/domain/inbound/NewDiary";
 import {DiaryId} from "$lib/server/domain/models/DiaryId";
+import type { PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async () => {
     const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))

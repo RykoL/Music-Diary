@@ -1,14 +1,14 @@
-import type {Actions, PageLoad} from './$types';
+import type {Actions, PageServerLoad} from './$types';
 import {DiaryService} from "$lib/server/service/DiaryService";
 import {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
 import {entryToPresentation} from "$lib/server/domain/mapper/EntryMapper";
 import {EntryId} from "$lib/server/domain/models/Entry";
 import {fail, redirect} from "@sveltejs/kit";
-import {UpdateEntryRequest} from "$lib/server/domain/models/inbound/UpdateEntry";
+import {UpdateEntryRequest} from "$lib/server/domain/inbound/UpdateEntry";
 import {DiaryId} from "$lib/server/domain/models/DiaryId";
 
-export const load: PageLoad = async ({params}) => {
+export const load: PageServerLoad = async ({params}) => {
     const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()))
     const entryId = new EntryId(parseInt(params.entryId))
     const diaryId = new DiaryId(params.diaryId)

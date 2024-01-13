@@ -3,7 +3,7 @@ import {mapToEntryListResponse} from "$lib/server/domain/mapper/EntryMapper";
 import {DiaryService} from "$lib/server/service/DiaryService";
 import {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
-import {EntryDraft} from "$lib/server/domain/models/inbound/EntryDraft";
+import {EntryDraft} from "$lib/server/domain/inbound/EntryDraft";
 import {fail, redirect} from "@sveltejs/kit";
 import { DiaryId } from '$lib/server/domain/models/DiaryId';
 
