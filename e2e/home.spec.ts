@@ -11,5 +11,5 @@ test('has a link to go to the diaries page', async ({page}) => {
     await page.goto('/')
     await expect(page.getByRole('link', {name: 'Create your diary'})).toBeVisible()
     await page.getByRole('link').click()
-    await expect(page).toHaveURL(/\/diaries/)
+    await expect(page.getByRole('link', {name: 'Your diaries'})).toBeVisible()
 })

@@ -31,6 +31,6 @@ export const actions = {
             return fail(400)
         }
 
-        throw redirect(303, `/diary/${diaryId.value}`)
+        throw redirect(303, `/app/diary/${diaryId.value}`)
     },
 } satisfies Actions;

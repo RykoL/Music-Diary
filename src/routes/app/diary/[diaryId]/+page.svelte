@@ -12,7 +12,7 @@
     export let data: PageData;
 </script>
 <Navbar>
-    <a class="btn btn-ghost normal-case text-xl col-start-2" href="/diaries">My music diary</a>
+    <a class="btn btn-ghost normal-case text-xl col-start-2" href="/app/diaries">My music diary</a>
     <div class="flex justify-end col-start-3">
         <button class="btn btn-circle btn-primary btn-md" aria-label="Write new entry" on:click={showModal}>
             +
@@ -29,6 +29,6 @@
         <form method="dialog">
             <button class="btn btn-sm btn-circle btn-ghost absolute right-4 top-6">x</button>
         </form>
-        <NewEntryForm method="post"/>
+        <NewEntryForm/>
     </div>
 </dialog>

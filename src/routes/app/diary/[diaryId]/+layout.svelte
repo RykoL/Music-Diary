@@ -1,5 +1,5 @@
 <script lang="ts">
-    import '../../../app.css';
+    import '../../../../app.css';
 
     const toggleTheme = () => {
         const current = document.documentElement.getAttribute("data-theme")

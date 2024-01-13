@@ -10,12 +10,12 @@
 </script>
 
 <Navbar>
-    <Link href="/diary/{data.diaryId}">Back</Link>
+    <Link href="/app/diary/{data.diaryId}">Back</Link>
     <div class="prose text-center">
         <h3>{data.entry.title}</h3>
     </div>
     <span class="text-right">
-        <Link href="/diary/{data.diaryId}/entry/{data.entry.id}/edit">Edit</Link>
+        <Link href="/app/diary/{data.diaryId}/entry/{data.entry.id}/edit">Edit</Link>
     </span>
 </Navbar>
 <main class="container h-max mx-auto flex flex-col gap-2">

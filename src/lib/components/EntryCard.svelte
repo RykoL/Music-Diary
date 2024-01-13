@@ -14,7 +14,7 @@
     }
 </style>
 
-<a href="/diary/{diaryId}/entry/{entry.id}" class="w-fit mx-auto">
+<a href="/app/diary/{diaryId}/entry/{entry.id}" class="w-fit mx-auto">
     <article class="card w-96 bg-base-100 shadow-xl card-bordered card-visibility">
         <figure class="card-container"><img loading="lazy" src={previewImageURL} class="image-full"
                                             alt="description of whats happening in here"/></figure>

@@ -15,7 +15,7 @@
         <h2 class="card-title">{diary.title}</h2>
         <p>{diary.description}</p>
         <div class="card-actions justify-end">
-            <a href="/diary/{diary.id}" class="btn btn-primary" aria-label="Open {diary.title}">Open Now</a>
+            <a href="/app/diary/{diary.id}" class="btn btn-primary" aria-label="Open {diary.title}">Open Now</a>
         </div>
     </div>
 </div>
