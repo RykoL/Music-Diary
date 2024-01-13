@@ -1,12 +1,14 @@
 import type {Database} from "sqlite";
-import {mapSingleEntry, type EntryRecord, mapEntries} from "$lib/server/entity/EntryMapper";
+import {mapSingleEntry, type EntryRecord, mapEntries} from "$lib/server/mapper/EntryMapper";
 import type {Entry, EntryId} from "$lib/server/domain/models/Entry";
 
 import type {DiaryId} from "$lib/server/domain/models/DiaryId";
 import type {Diary} from "$lib/server/domain/models/Diary";
-import {diaryMapper, type DiaryRecord, mapDiaries} from "$lib/server/entity/DiaryMapper";
+import {diaryMapper, type DiaryRecord, mapDiaries} from "$lib/server/mapper/DiaryMapper";
+import type {DiaryPersistence} from "$lib/server/domain/ports/outbound/DiaryPersistance";
+import type {EntryPersistence} from "$lib/server/domain/ports/outbound/EntryPersistence";
 
-export class DiaryRepository {
+export class DiaryRepository implements DiaryPersistence, EntryPersistence {
 
     private db: Database
 

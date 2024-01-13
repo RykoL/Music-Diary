@@ -1,6 +1,6 @@
 import {Diary} from "$lib/server/domain/models/Diary";
 import { DiaryId } from "../domain/models/DiaryId";
-import {type EntryRecord, mapEntries} from "$lib/server/entity/EntryMapper";
+import {type EntryRecord, mapEntries} from "$lib/server/mapper/EntryMapper";
 
 export type DiaryRecord = {
     diaryId: string,

@@ -1,4 +1,4 @@
-import type {DiaryRecord} from "$lib/server/entity/DiaryMapper";
+import type {DiaryRecord} from "$lib/server/mapper/DiaryMapper";
 import {Entry} from "$lib/server/domain/models/Entry";
 import {AttachedImage, ImageId} from "$lib/server/domain/models/Image";
 import {SpotifyId, SpotifySong, SpotifyURL} from "$lib/server/domain/models/SpotifySong";

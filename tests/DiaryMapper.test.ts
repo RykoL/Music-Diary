@@ -1,4 +1,4 @@
-import {diaryMapper, type DiaryRecord} from "$lib/server/entity/DiaryMapper";
+import {diaryMapper, type DiaryRecord} from "$lib/server/mapper/DiaryMapper";
 import {Diary} from "$lib/server/domain/models/Diary";
 import {DiaryId} from "$lib/server/domain/models/DiaryId";
 import {aFirstEntry, aSecondEntry, baseRecord} from "./fixtures";
