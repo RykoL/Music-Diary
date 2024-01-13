@@ -14,7 +14,7 @@
 <Navbar>
     <a class="btn btn-ghost normal-case text-xl col-start-2" href="/diaries">My music diary</a>
     <div class="flex justify-end col-start-3">
-        <button class="btn btn-circle btn-primary btn-md" aria-label="Add new entry" on:click={showModal}>
+        <button class="btn btn-circle btn-primary btn-md" aria-label="Write new entry" on:click={showModal}>
             +
         </button>
     </div>
