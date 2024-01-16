@@ -7,6 +7,7 @@ import type {Diary} from "$lib/server/domain/models/Diary";
 import {diaryMapper, type DiaryRecord, mapDiaries} from "$lib/server/mapper/DiaryMapper";
 import type {DiaryPersistence} from "$lib/server/domain/ports/outbound/DiaryPersistance";
 import type {EntryPersistence} from "$lib/server/domain/ports/outbound/EntryPersistence";
+import type {UserId} from "$lib/server/domain/models/UserId";
 
 export class DiaryRepository implements DiaryPersistence, EntryPersistence {
 
@@ -144,8 +145,8 @@ export class DiaryRepository implements DiaryPersistence, EntryPersistence {
         }
     }
 
-    async getDiaries(): Promise<Array<Diary>> {
-        const records = await this.db.all<Array<DiaryRecord>>('SELECT id as diaryId, title as diaryTitle, description as diaryDescription from diary;')
+    async getDiaries(id: UserId): Promise<Array<Diary>> {
+        const records = await this.db.all<Array<DiaryRecord>>('SELECT id as diaryId, title as diaryTitle, description as diaryDescription from diary where owner_id = ?;', [id.value])
         return mapDiaries(records);
     }
 

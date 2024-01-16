@@ -43,6 +43,11 @@
     </div>
 </dialog>
 <main class="container mx-auto flex flex-col w-full gap-3 mt-3">
+    {#if data.diaries.length === 0}
+        <div class="prose">
+            <p>Looks pretty empty here. How about starting your first diary</p>
+        </div>
+    {/if}
 
     {#each data.diaries as diary }
         <DiaryCard diary={diary}/>

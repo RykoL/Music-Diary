@@ -1,10 +1,11 @@
 import type {Diary} from "../../models/Diary";
 import type {DiaryId} from "../../models/DiaryId";
+import {UserId} from "$lib/server/domain/models/UserId";
 
 export interface DiaryPersistence {
     getDiaryById(diaryId: DiaryId): Promise<Diary | undefined>
 
-    getDiaries(): Promise<Array<Diary>>
+    getDiaries(id: UserId): Promise<Array<Diary>>
 
     saveDiary(diary: Diary): Promise<void>
 

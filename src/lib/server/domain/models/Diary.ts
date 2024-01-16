@@ -1,18 +1,21 @@
 import {Entry, type EntryId} from "$lib/server/domain/models/Entry";
 import type {DiaryId} from "$lib/server/domain/models/DiaryId";
 import type {EntryDraft} from "$lib/server/domain/inbound/EntryDraft";
+import type {UserId} from "$lib/server/domain/models/UserId";
 
 export class Diary {
 
     public id: DiaryId;
     public title: string;
     public description: string;
+    public owner: UserId
     private _entries: Array<Entry> = []
 
-    constructor(id: DiaryId, title:string, description: string, entries: Array<Entry>) {
+    constructor(id: DiaryId, title:string, description: string, entries: Array<Entry>, owner: UserId) {
         this.id = id
         this.title = title;
         this.description = description;
+        this.owner = owner;
         this._entries = entries
     }
 

@@ -1,0 +1,1 @@
+ALTER TABLE diary ADD COLUMN owner_id varchar NOT NULL DEFAULT '4b40c3b2-c08f-4e88-8e06-549e8aed5f5b';
