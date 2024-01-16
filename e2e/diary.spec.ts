@@ -5,6 +5,13 @@ const goToDiary = async (page: Page, title: string) => {
     await page.getByRole('link', {name: `Open ${title}`}).click()
 }
 
+test.beforeEach(async ({page}) => {
+    await page.goto('/auth/signin')
+    await page.getByLabel('Username').fill('SomeUser')
+    await page.getByLabel('Password').fill('SomePassword')
+    await page.getByRole('button').click()
+})
+
 test.describe.serial("Diary journey", () => {
     const random = Math.floor(Math.random() * 20)
     const diaryUrlRegex = /\/app\/diary\/[\w\d]{8}-([\w\d]{4}-){3}[\w\d]{12}/

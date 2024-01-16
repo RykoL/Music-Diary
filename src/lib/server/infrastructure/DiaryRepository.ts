@@ -151,7 +151,7 @@ export class DiaryRepository implements DiaryPersistence, EntryPersistence {
     }
 
     async saveDiary(diary: Diary) {
-        await this.db.run('INSERT INTO diary VALUES (?, ?, ?);', [diary.id.value, diary.title, diary.description])
+        await this.db.run('INSERT INTO diary VALUES (?, ?, ?, ?);', [diary.id.value, diary.title, diary.description, diary.owner.value])
     }
 
     async removeDiary(diaryId: DiaryId) {
