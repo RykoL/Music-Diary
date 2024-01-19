@@ -23,7 +23,7 @@
 </Navbar>
 <section class="container flex flex-col gap-5 mt-2">
     {#if data.entries.length === 0}
-        <div class="prose">
+        <div class="prose mx-auto px-10">
             <p>It looks pretty empty in here. How about you create a new entry.</p>
         </div>
     {/if}

@@ -12,7 +12,7 @@
 </script>
 
 <Navbar>
-    <a class="btn btn-ghost normal-case text-xl col-start-2" href="/diaries">Your diaries</a>
+    <a class="btn btn-ghost normal-case text-xl col-start-2" href="/app/diaries">Your diaries</a>
 </Navbar>
 <dialog id="new-entry-modal" class="modal" bind:this={dialog}>
     <div class="modal-box">
