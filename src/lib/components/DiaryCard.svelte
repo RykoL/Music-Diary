@@ -1,5 +1,6 @@
 <script lang="ts">
     import type {DiaryPresentation} from "$lib/models/DiaryPresentation";
+    import {X} from "lucide-svelte";
 
     export let diary: DiaryPresentation
 </script>
@@ -8,7 +9,9 @@
     <div class="w-full flex flex-row justify-end h-fit pt-2 px-2">
         <form action="?/delete" method="post" class="z-50">
             <input type="hidden" name="diaryId" value={diary.id}>
-            <button class="btn btn-sm btn-ghost" aria-label="Remove {diary.title}">x</button>
+            <button class="btn btn-sm btn-ghost" aria-label="Remove {diary.title}">
+                <X/>
+            </button>
         </form>
     </div>
     <div class="card-body">
