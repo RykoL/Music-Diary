@@ -27,7 +27,4 @@
         <div>{@html data.entry.embedURL}</div>
         <p class="relative bottom-0">{formattedDate}</p>
     </div>
-    <form action="?/delete" method="post">
-        <button class="btn btn-error">Delete</button>
-    </form>
 </main>

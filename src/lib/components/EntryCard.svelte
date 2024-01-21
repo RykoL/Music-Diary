@@ -1,6 +1,7 @@
 <script lang="ts">
     import type {EntryPresentation} from "$lib/models/EntryResponse";
     import {formatDateString} from "$lib/utils.js";
+    import {X} from "lucide-svelte";
 
     export let entry: EntryPresentation;
     export let diaryId: string;
@@ -14,8 +15,16 @@
     }
 </style>
 
-<a href="/app/diary/{diaryId}/entry/{entry.id}" class="w-fit mx-auto">
-    <article class="card w-96 bg-base-100 shadow-xl card-bordered card-visibility">
+<article class="card w-96 bg-base-100 shadow-xl card-bordered card-visibility mx-auto">
+    <div class="absolute top-2 right-2 z-50">
+        <form action="/app/diary/{diaryId}/entry/{entry.id}?/delete" method="post" class="z-50">
+            <input type="hidden" name="diaryId" value="">
+            <button class="btn btn-sm btn-ghost" aria-label="Remove ">
+                <X/>
+            </button>
+        </form>
+    </div>
+    <a href="/app/diary/{diaryId}/entry/{entry.id}">
         <figure class="card-container"><img loading="lazy" src={previewImageURL} class="image-full"
                                             alt="description of whats happening in here"/></figure>
         <div class="card-body">
@@ -28,5 +37,5 @@
                 {@html entry.embedURL}
             </div>
         </div>
-    </article>
-</a>
+    </a>
+</article>

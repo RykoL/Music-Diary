@@ -30,6 +30,6 @@ export const actions = {
 
         await diaryService.deleteEntry(entryId)
 
-        throw redirect(303, "/diary")
+        return {success: true}
     }
 } satisfies Actions
