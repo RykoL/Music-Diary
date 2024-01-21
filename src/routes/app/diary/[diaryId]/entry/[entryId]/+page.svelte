@@ -22,9 +22,9 @@
     <Carousel imageURLs={data.entry.imageURLs}/>
     <div class="px-4">
         <section class="my-2 prose prose-lg">
+            <p class="float-right">{formattedDate}</p>
             <p>{data.entry.content}</p>
         </section>
         <div>{@html data.entry.embedURL}</div>
-        <p class="relative bottom-0">{formattedDate}</p>
     </div>
 </main>
