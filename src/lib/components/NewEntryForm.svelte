@@ -6,7 +6,7 @@
         <label for="title" class="label">
             <span class="label-text">Title</span>
         </label>
-        <input type="text" id="title" name="title" class="input input-bordered w-full" placeholder="Title"
+        <input type="text" id="title" name="title" class="input input-bordered w-full" maxlength="50" placeholder="Title"
                required>
     </div>
     <div class="form-control w-full">

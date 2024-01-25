@@ -4,7 +4,7 @@ import {DiaryRepository} from "$lib/server/infrastructure/DiaryRepository";
 import {DatabaseFactory} from "$lib/server/infrastructure/DatabaseFactory";
 import {entryToPresentation} from "$lib/server/domain/mapper/EntryMapper";
 import {EntryId} from "$lib/server/domain/models/Entry";
-import {error,  redirect} from "@sveltejs/kit";
+import {error} from "@sveltejs/kit";
 import { DiaryId } from '$lib/server/domain/models/DiaryId';
 
 export const load: PageServerLoad = async ({params}) => {
