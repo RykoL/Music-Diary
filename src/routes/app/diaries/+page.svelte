@@ -2,6 +2,7 @@
     import Navbar from "$lib/components/Navbar.svelte";
     import type {PageData} from './$types'
     import DiaryCard from "$lib/components/DiaryCard.svelte";
+    import {Plus} from "lucide-svelte";
 
     let dialog: HTMLDialogElement;
     const showModal = () => {
@@ -13,6 +14,11 @@
 
 <Navbar>
     <a class="btn btn-ghost normal-case text-xl col-start-2" href="/app/diaries">Your diaries</a>
+    <div class="flex justify-end py-2">
+        <button class="btn btn-primary btn-circle btn-md" aria-label="Start new diary" on:click={showModal}>
+            <Plus/>
+        </button>
+    </div>
 </Navbar>
 <dialog id="new-entry-modal" class="modal" bind:this={dialog}>
     <div class="modal-box">
@@ -52,5 +58,4 @@
     {#each data.diaries as diary }
         <DiaryCard diary={diary}/>
     {/each}
-    <button class="btn btn-primary" on:click={showModal}>Start new diary</button>
 </main>
