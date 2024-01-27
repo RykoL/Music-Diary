@@ -2,6 +2,8 @@ import { Entry, type EntryId } from '$lib/server/domain/models/diary/Entry';
 import type { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 import type { EntryDraft } from '$lib/server/domain/inbound/EntryDraft';
 import type { UserId } from '$lib/server/domain/models/UserId';
+import {Gallery} from "$lib/server/domain/models/gallery/Gallery";
+import {GalleryId} from "$lib/server/domain/models/gallery/GalleryId";
 
 export class Diary {
 	public id: DiaryId;
@@ -46,5 +48,11 @@ export class Diary {
 
 	get entries() {
 		return this._entries;
+	}
+
+	public publish(): Gallery {
+		return new Gallery(
+			GalleryId.create()
+		)
 	}
 }
