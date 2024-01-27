@@ -24,6 +24,7 @@ test.describe.serial("Diary journey", () => {
 
         await page.getByRole('button', {name: 'Start new diary'}).click()
 
+        await expect(page.getByRole('heading', {name: 'Start new diary'})).toBeVisible()
         await page.getByLabel('Title').fill(title);
         await page.getByLabel('Description').fill(description);
         await page.getByRole('button', {name: 'Create'}).click()

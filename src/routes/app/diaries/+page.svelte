@@ -22,6 +22,7 @@
 </Navbar>
 <dialog id="new-entry-modal" class="modal" bind:this={dialog}>
     <div class="modal-box">
+        <h3 class="font-bold text-lg">Start new diary</h3>
         <form method="dialog">
             <button class="btn btn-sm btn-circle btn-ghost absolute right-4 top-6">x</button>
         </form>
