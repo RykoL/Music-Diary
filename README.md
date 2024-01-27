@@ -29,11 +29,13 @@ Music diary is a platform to keep track of the music that has a special place in
 ## Running locally
 
 Install dependencies
+
 ```bash
 npm i
 ```
 
 To run locally run following command
+
 ```bash
 npm run dev
 ```
@@ -41,16 +43,19 @@ npm run dev
 ## Running tests
 
 To run unit tests:
+
 ```bash
 npm run test
 ```
 
 To run journey tests:
+
 ```bash
 npm run e2e
 ```
 
 To run journey tests in interactive mode:
+
 ```bash
 npm run e2e-ui
 ```

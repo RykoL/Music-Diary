@@ -1,107 +1,88 @@
-import {diaryMapper, type DiaryRecord} from "$lib/server/mapper/DiaryMapper";
-import {Diary} from "$lib/server/domain/models/Diary";
-import {DiaryId} from "$lib/server/domain/models/DiaryId";
-import {aFirstEntry, aSecondEntry, baseRecord} from "./fixtures";
+import { diaryMapper, type DiaryRecord } from '$lib/server/mapper/DiaryMapper';
+import { Diary } from '$lib/server/domain/models/Diary';
+import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import { aFirstEntry, aSecondEntry, baseRecord } from './fixtures';
 
-test("maps diary id from record", () => {
-    const record: DiaryRecord = {
-        ...baseRecord,
-        diaryId: "abc",
-    }
+test('maps diary id from record', () => {
+	const record: DiaryRecord = {
+		...baseRecord,
+		diaryId: 'abc'
+	};
 
-    const expected = new Diary(
-        new DiaryId("abc"),
-        "",
-        "",
-        []
-    )
-    const actual = diaryMapper([record])
-    expect(expected.id).toEqual(actual.id)
-})
+	const expected = new Diary(new DiaryId('abc'), '', '', []);
+	const actual = diaryMapper([record]);
+	expect(expected.id).toEqual(actual.id);
+});
 
-test("maps diary title from record", () => {
-    const record: DiaryRecord = {
-        ...baseRecord,
-        diaryTitle: "Some title",
-    }
+test('maps diary title from record', () => {
+	const record: DiaryRecord = {
+		...baseRecord,
+		diaryTitle: 'Some title'
+	};
 
-    const expected = new Diary(
-        new DiaryId("abc"),
-        "Some title",
-        "",
-        []
-    )
-    const actual = diaryMapper([record])
-    expect(expected.title).toEqual(actual.title)
-})
+	const expected = new Diary(new DiaryId('abc'), 'Some title', '', []);
+	const actual = diaryMapper([record]);
+	expect(expected.title).toEqual(actual.title);
+});
 
-test("maps diary description from record", () => {
-    const record: DiaryRecord = {
-        ...baseRecord,
-        diaryDescription: "Some description",
-    }
+test('maps diary description from record', () => {
+	const record: DiaryRecord = {
+		...baseRecord,
+		diaryDescription: 'Some description'
+	};
 
-    const expected = new Diary(
-        new DiaryId("abc"),
-        "Some title",
-        "Some description",
-        []
-    )
-    const actual = diaryMapper([record])
-    expect(expected.description).toEqual(actual.description)
-})
+	const expected = new Diary(new DiaryId('abc'), 'Some title', 'Some description', []);
+	const actual = diaryMapper([record]);
+	expect(expected.description).toEqual(actual.description);
+});
 
-test("maps entry from record", () => {
+test('maps entry from record', () => {
+	const diary = new Diary(
+		new DiaryId(baseRecord.diaryId),
+		baseRecord.diaryTitle,
+		baseRecord.diaryDescription,
+		[aFirstEntry]
+	);
 
-    const diary = new Diary(
-        new DiaryId(baseRecord.diaryId),
-        baseRecord.diaryTitle,
-        baseRecord.diaryDescription,
-        [aFirstEntry]
-    )
+	const actual = diaryMapper([baseRecord]);
+	expect(diary.entries).toStrictEqual(actual.entries);
+});
 
-    const actual = diaryMapper([baseRecord])
-    expect(diary.entries).toStrictEqual(actual.entries)
-})
+test('maps multiple entries from record without duplicates', () => {
+	const expected = new Diary(
+		new DiaryId(baseRecord.diaryId),
+		baseRecord.diaryTitle,
+		baseRecord.diaryDescription,
+		[aFirstEntry, aSecondEntry]
+	);
 
-test("maps multiple entries from record without duplicates", () => {
+	const records: Array<DiaryRecord> = [
+		baseRecord,
+		{ ...baseRecord, entryId: 1, entryTitle: 'Second' }
+	];
 
-    const expected = new Diary(
-        new DiaryId(baseRecord.diaryId),
-        baseRecord.diaryTitle,
-        baseRecord.diaryDescription,
-        [aFirstEntry, aSecondEntry]
-    )
+	const actual = diaryMapper(records);
+	expect(actual.entries.length).toEqual(2);
+	expect(expected.entries).toStrictEqual(actual.entries);
+});
 
-    const records: Array<DiaryRecord> = [
-       baseRecord,
-        {...baseRecord, entryId: 1, entryTitle: 'Second'}
-    ]
+test('construct diary with empty entries if entryId is null', () => {
+	const record: DiaryRecord = {
+		diaryId: '58f7daa7-6b1e-4400-b94a-5f44f1d810f7',
+		diaryTitle: 'My music diary',
+		diaryDescription: 'This is your first diary.',
+		content: '',
+		date: '',
+		embed: '',
+		entryId: null,
+		imageId: '',
+		songId: '',
+		entryTitle: '',
+		url: ''
+	};
 
-    const actual = diaryMapper(records)
-    expect(actual.entries.length).toEqual(2)
-    expect(expected.entries).toStrictEqual(actual.entries)
-})
+	const records: Array<DiaryRecord> = [record];
 
-test("construct diary with empty entries if entryId is null", () => {
-    const record: DiaryRecord = {
-        diaryId: "58f7daa7-6b1e-4400-b94a-5f44f1d810f7",
-        diaryTitle: "My music diary",
-        diaryDescription: "This is your first diary.",
-        content: "",
-        date: "",
-        embed: "",
-        entryId: null,
-        imageId: "",
-        songId: "",
-        entryTitle: "",
-        url: "",
-    }
-
-    const records: Array<DiaryRecord> = [
-        record,
-    ]
-
-    const actual = diaryMapper(records)
-    expect(actual.entries.length).toEqual(0)
-})
+	const actual = diaryMapper(records);
+	expect(actual.entries.length).toEqual(0);
+});

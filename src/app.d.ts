@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
-import type {User} from "$lib/server/domain/models/User";
+import type { User } from '$lib/server/domain/models/User';
 
 declare global {
 	namespace App {
@@ -9,11 +9,9 @@ declare global {
 		// interface PageData {}
 		// interface Platform {}
 		interface Locals {
-			appUser: User ;
+			appUser: User;
 		}
 	}
-
-
 }
 
 export {};
