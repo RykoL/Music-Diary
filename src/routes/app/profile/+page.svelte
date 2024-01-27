@@ -29,7 +29,7 @@
 </Navbar>
 <main class="container mt-10">
 	<div class="avatar w-full">
-		{#if $page.data.session.user?.image}
+		{#if $page?.data?.session?.user?.image}
 			<div class="w-48 rounded-full mx-auto border-primary border-2">
 				<img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Me" />
 			</div>
@@ -38,7 +38,7 @@
 		{/if}
 	</div>
 	<div class="prose text-center mt-5">
-		<h2>{$page.data.session.user.name ?? 'User'}</h2>
-		<p>{$page.data.session.user.email ?? 'peter.panski@pansko.de'}</p>
+		<h2>{$page?.data?.session?.user?.name ?? 'User'}</h2>
+		<p>{$page?.data?.session?.user?.email ?? 'peter.panski@pansko.de'}</p>
 	</div>
 </main>

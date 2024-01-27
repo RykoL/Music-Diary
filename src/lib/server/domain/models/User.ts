@@ -1,5 +1,5 @@
-import { Diary } from '$lib/server/domain/models/Diary';
-import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import { Diary } from '$lib/server/domain/models/diary/Diary';
+import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 import { UserId } from '$lib/server/domain/models/UserId';
 import type { Session } from '@auth/sveltekit';
 

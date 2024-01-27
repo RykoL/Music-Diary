@@ -4,7 +4,7 @@
 	import NewEntryForm from '$lib/components/NewEntryForm.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { ChevronLeft, SquarePen } from 'lucide-svelte';
+	import { SquarePen } from 'lucide-svelte';
 
 	let dialog: HTMLDialogElement;
 

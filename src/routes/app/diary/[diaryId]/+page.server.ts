@@ -5,7 +5,7 @@ import { DiaryRepository } from '$lib/server/infrastructure/DiaryRepository';
 import { DatabaseFactory } from '$lib/server/infrastructure/DatabaseFactory';
 import { EntryDraft } from '$lib/server/domain/inbound/EntryDraft';
 import { fail, redirect } from '@sveltejs/kit';
-import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()));
@@ -31,6 +31,6 @@ export const actions = {
 			return fail(400);
 		}
 
-		throw redirect(303, `/app/diary/${diaryId.value}`);
+		redirect(303, `/app/diary/${diaryId.value}`);
 	}
 } satisfies Actions;

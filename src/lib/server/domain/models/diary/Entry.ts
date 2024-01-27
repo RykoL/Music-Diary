@@ -1,6 +1,6 @@
 import type { Song } from '$lib/server/domain/models/Song';
-import { EntryBuilder } from '$lib/server/domain/models/EntryBuilder';
-import type { EntryTitle } from '$lib/server/domain/models/EntryTitle';
+import { EntryBuilder } from '$lib/server/domain/models/diary/EntryBuilder';
+import type { EntryTitle } from '$lib/server/domain/models/diary/EntryTitle';
 import {
 	AttachedImage,
 	type Image,
@@ -8,7 +8,7 @@ import {
 	UnattachedImage
 } from '$lib/server/domain/models/Image';
 import { ValueObject } from '$lib/server/domain/models/ValueObject';
-import type { DiaryId } from '$lib/server/domain/models/DiaryId';
+import type { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 import { SpotifyId, SpotifySong, SpotifyURL } from '$lib/server/domain/models/SpotifySong';
 
 export class EntryId extends ValueObject<number> {

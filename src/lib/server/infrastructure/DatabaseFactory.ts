@@ -1,4 +1,4 @@
-import sqlite3, { Statement } from 'sqlite3';
+import sqlite3 from 'sqlite3';
 import { Database, open } from 'sqlite';
 import { env } from '$env/dynamic/private';
 
@@ -13,9 +13,9 @@ const getSqliteConnection = async () => {
 
 export class DatabaseFactory {
 	static dbName: string = 'diary.sqlite3';
-	static dbInstance: Database<sqlite3.Database, Statement> | null = null;
+	static dbInstance: Database | null = null;
 
-	static async connect(): Promise<Database<sqlite3.Database, Statement>> {
+	static async connect(): Promise<Database> {
 		if (this.dbInstance) {
 			return this.dbInstance;
 		}

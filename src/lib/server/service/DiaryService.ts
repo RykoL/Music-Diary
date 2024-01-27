@@ -1,11 +1,11 @@
 import type { DiaryRepository } from '$lib/server/infrastructure/DiaryRepository';
 import type { EntryDraft } from '$lib/server/domain/inbound/EntryDraft';
 import { updateSongEmbedding } from '$lib/server/infrastructure/SpotifyRepository';
-import type { Entry, EntryId } from '$lib/server/domain/models/Entry';
+import type { Entry, EntryId } from '$lib/server/domain/models/diary/Entry';
 import type { UpdateEntryRequest } from '$lib/server/domain/inbound/UpdateEntry';
 import { uploadImage, uploadImages } from '$lib/server/service/ImageUploadService';
-import type { Diary } from '$lib/server/domain/models/Diary';
-import type { DiaryId } from '$lib/server/domain/models/DiaryId';
+import type { Diary } from '$lib/server/domain/models/diary/Diary';
+import type { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 import { DatabaseFactory } from '$lib/server/infrastructure/DatabaseFactory';
 import type { NewDiary } from '$lib/server/domain/inbound/NewDiary';
 import type { User } from '$lib/server/domain/models/User';

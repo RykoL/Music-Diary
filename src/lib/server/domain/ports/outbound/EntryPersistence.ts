@@ -1,5 +1,5 @@
-import type { Entry, EntryId } from '$lib/server/domain/models/Entry';
-import type { DiaryId } from '$lib/server/domain/models/DiaryId';
+import type { Entry, EntryId } from '$lib/server/domain/models/diary/Entry';
+import type { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 
 export interface EntryPersistence {
 	getEntryById(entryId: EntryId): Promise<Entry | undefined>;

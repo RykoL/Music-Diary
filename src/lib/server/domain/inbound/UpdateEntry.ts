@@ -1,6 +1,6 @@
 import { SpotifyURL } from '$lib/server/domain/models/SpotifySong';
-import type { EntryId } from '$lib/server/domain/models/Entry';
-import { EntryTitle } from '$lib/server/domain/models/EntryTitle';
+import type { EntryId } from '$lib/server/domain/models/diary/Entry';
+import { EntryTitle } from '$lib/server/domain/models/diary/EntryTitle';
 
 export class UpdateEntryRequest {
 	constructor(

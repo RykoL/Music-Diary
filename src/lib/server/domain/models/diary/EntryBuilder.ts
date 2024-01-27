@@ -1,8 +1,8 @@
-import { EntryId, Entry } from '$lib/server/domain/models/Entry';
+import { EntryId, Entry } from '$lib/server/domain/models/diary/Entry';
 import type { SpotifySong } from '$lib/server/domain/models/SpotifySong';
-import { EntryTitle } from '$lib/server/domain/models/EntryTitle';
+import { EntryTitle } from '$lib/server/domain/models/diary/EntryTitle';
 import type { Image } from '$lib/server/domain/models/Image';
-import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 
 export class EntryBuilder {
 	//@ts-expect-error Cannot actually be undefined

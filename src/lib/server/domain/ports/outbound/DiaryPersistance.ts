@@ -1,5 +1,5 @@
-import type { Diary } from '../../models/Diary';
-import type { DiaryId } from '../../models/DiaryId';
+import type { Diary } from '../../models/diary/Diary';
+import type { DiaryId } from '../../models/diary/DiaryId';
 import { UserId } from '$lib/server/domain/models/UserId';
 
 export interface DiaryPersistence {

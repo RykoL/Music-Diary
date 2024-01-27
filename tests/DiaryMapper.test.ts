@@ -1,7 +1,8 @@
 import { diaryMapper, type DiaryRecord } from '$lib/server/mapper/DiaryMapper';
-import { Diary } from '$lib/server/domain/models/Diary';
-import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import { Diary } from '$lib/server/domain/models/diary/Diary';
+import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 import { aFirstEntry, aSecondEntry, baseRecord } from './fixtures';
+import { UserId } from '$lib/server/domain/models/UserId';
 
 test('maps diary id from record', () => {
 	const record: DiaryRecord = {
@@ -9,7 +10,7 @@ test('maps diary id from record', () => {
 		diaryId: 'abc'
 	};
 
-	const expected = new Diary(new DiaryId('abc'), '', '', []);
+	const expected = new Diary(new DiaryId('abc'), '', '', [], new UserId("abc"));
 	const actual = diaryMapper([record]);
 	expect(expected.id).toEqual(actual.id);
 });
@@ -20,7 +21,7 @@ test('maps diary title from record', () => {
 		diaryTitle: 'Some title'
 	};
 
-	const expected = new Diary(new DiaryId('abc'), 'Some title', '', []);
+	const expected = new Diary(new DiaryId('abc'), 'Some title', '', [], new UserId("abc"));
 	const actual = diaryMapper([record]);
 	expect(expected.title).toEqual(actual.title);
 });
@@ -31,7 +32,7 @@ test('maps diary description from record', () => {
 		diaryDescription: 'Some description'
 	};
 
-	const expected = new Diary(new DiaryId('abc'), 'Some title', 'Some description', []);
+	const expected = new Diary(new DiaryId('abc'), 'Some title', 'Some description', [], new UserId("abc"));
 	const actual = diaryMapper([record]);
 	expect(expected.description).toEqual(actual.description);
 });
@@ -41,7 +42,8 @@ test('maps entry from record', () => {
 		new DiaryId(baseRecord.diaryId),
 		baseRecord.diaryTitle,
 		baseRecord.diaryDescription,
-		[aFirstEntry]
+		[aFirstEntry],
+		new UserId("abc")
 	);
 
 	const actual = diaryMapper([baseRecord]);
@@ -53,7 +55,8 @@ test('maps multiple entries from record without duplicates', () => {
 		new DiaryId(baseRecord.diaryId),
 		baseRecord.diaryTitle,
 		baseRecord.diaryDescription,
-		[aFirstEntry, aSecondEntry]
+		[aFirstEntry, aSecondEntry],
+		new UserId("abc")
 	);
 
 	const records: Array<DiaryRecord> = [

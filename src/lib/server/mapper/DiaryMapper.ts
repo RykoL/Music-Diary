@@ -1,6 +1,7 @@
-import { Diary } from '$lib/server/domain/models/Diary';
-import { DiaryId } from '../domain/models/DiaryId';
+import { Diary } from '$lib/server/domain/models/diary/Diary';
+import { DiaryId } from '../domain/models/diary/DiaryId';
 import { type EntryRecord, mapEntries } from '$lib/server/mapper/EntryMapper';
+import { UserId } from '../domain/models/UserId';
 
 export type DiaryRecord = {
 	diaryId: string;
@@ -25,6 +26,7 @@ export const diaryMapper = (records: DiaryRecord[]): Diary => {
 		new DiaryId(firstRecord.diaryId),
 		firstRecord.diaryTitle,
 		firstRecord.diaryDescription,
-		entries
+		entries,
+		new UserId("")
 	);
 };

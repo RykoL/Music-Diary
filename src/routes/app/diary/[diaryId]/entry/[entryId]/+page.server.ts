@@ -3,9 +3,9 @@ import { DiaryService } from '$lib/server/service/DiaryService';
 import { DiaryRepository } from '$lib/server/infrastructure/DiaryRepository';
 import { DatabaseFactory } from '$lib/server/infrastructure/DatabaseFactory';
 import { entryToPresentation } from '$lib/server/domain/mapper/EntryMapper';
-import { EntryId } from '$lib/server/domain/models/Entry';
+import { EntryId } from '$lib/server/domain/models/diary/Entry';
 import { error } from '@sveltejs/kit';
-import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const diaryService = new DiaryService(new DiaryRepository(await DatabaseFactory.connect()));
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	const entry = await diaryService.getEntryById(diaryId, entryId);
 
 	if (entry === undefined) {
-		return error(404);
+		error(404);
 	}
 
 	return {

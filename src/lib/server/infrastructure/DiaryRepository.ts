@@ -1,13 +1,14 @@
 import type { Database } from 'sqlite';
 import { mapSingleEntry, type EntryRecord, mapEntries } from '$lib/server/mapper/EntryMapper';
-import type { Entry, EntryId } from '$lib/server/domain/models/Entry';
+import type { Entry, EntryId } from '$lib/server/domain/models/diary/Entry';
 
-import type { DiaryId } from '$lib/server/domain/models/DiaryId';
-import type { Diary } from '$lib/server/domain/models/Diary';
+import type { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
+import type { Diary } from '$lib/server/domain/models/diary/Diary';
 import { diaryMapper, type DiaryRecord, mapDiaries } from '$lib/server/mapper/DiaryMapper';
 import type { DiaryPersistence } from '$lib/server/domain/ports/outbound/DiaryPersistance';
 import type { EntryPersistence } from '$lib/server/domain/ports/outbound/EntryPersistence';
 import type { UserId } from '$lib/server/domain/models/UserId';
+import type {UnattachedImage} from "$lib/server/domain/models/Image";
 
 export class DiaryRepository implements DiaryPersistence, EntryPersistence {
 	private db: Database;
@@ -117,7 +118,7 @@ export class DiaryRepository implements DiaryPersistence, EntryPersistence {
 			await Promise.all(
 				entry
 					.getUnAttachedImages()
-					.map((img) => this.db.run(imageQuery, [entry.id.value, img.id.value]))
+					.map((img: UnattachedImage) => this.db.run(imageQuery, [entry.id.value, img.id.value]))
 			);
 			await this.db.run('COMMIT;');
 		} catch (e) {

@@ -2,10 +2,10 @@ import type { Actions } from '@sveltejs/kit';
 import { DiaryService } from '$lib/server/service/DiaryService';
 import { DiaryRepository } from '$lib/server/infrastructure/DiaryRepository';
 import { DatabaseFactory } from '$lib/server/infrastructure/DatabaseFactory';
-import type { Diary } from '$lib/server/domain/models/Diary';
+import type { Diary } from '$lib/server/domain/models/diary/Diary';
 import { toPresentation } from '$lib/server/domain/mapper/DiaryMapper';
 import { NewDiary } from '$lib/server/domain/inbound/NewDiary';
-import { DiaryId } from '$lib/server/domain/models/DiaryId';
+import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (params) => {
