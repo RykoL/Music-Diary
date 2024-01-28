@@ -37,12 +37,17 @@ describe("Diary", () => {
                 new Post(
                     new PostId(expect.any(String)),
                     "Vacation in Andalusia",
-                    "This is the content of the entry"
+                    "This is the content of the entry",
+                    '<iframe></iframe>',
+                    new URL("http://localhost:5173/ca3321fe-5e3a-48d4-9356-d98579a258d9"),
                 ),
                 new Post(
                     new PostId(expect.any(String)),
                     "Second",
-                    "This is the content of the entry"
+                    "This is the content of the entry",
+
+                    '<iframe></iframe>',
+                    new URL("http://localhost:5173/ca3321fe-5e3a-48d4-9356-d98579a258d9"),
                 )
             ]
 
