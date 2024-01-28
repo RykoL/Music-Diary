@@ -4,6 +4,7 @@ import type { EntryDraft } from '$lib/server/domain/inbound/EntryDraft';
 import type { UserId } from '$lib/server/domain/models/UserId';
 import {Gallery} from "$lib/server/domain/models/gallery/Gallery";
 import {GalleryId} from "$lib/server/domain/models/gallery/GalleryId";
+import { GalleryTitle } from '../gallery/GalleryTitle';
 
 export class Diary {
 	public id: DiaryId;
@@ -50,9 +51,11 @@ export class Diary {
 		return this._entries;
 	}
 
-	public publish(): Gallery {
+	public publish(title?: string): Gallery {
+		const galleryTitle = title ? new GalleryTitle(title) : new GalleryTitle(this.title)
 		return new Gallery(
-			GalleryId.create()
+			GalleryId.create(),
+			galleryTitle
 		)
 	}
 }
