@@ -20,6 +20,7 @@ export const baseRecord: DiaryRecord = {
 export const aFirstEntry = Entry.builder()
 	.withId(baseRecord.entryId!)
 	.content(baseRecord.content)
+	.withDiaryId(baseRecord.diaryId)
 	.title(baseRecord.entryTitle)
 	.withImages(
 		new AttachedImage(
@@ -39,6 +40,7 @@ export const aFirstEntry = Entry.builder()
 
 export const aSecondEntry = Entry.builder()
 	.withId(baseRecord.entryId! + 1)
+	.withDiaryId(baseRecord.diaryId)
 	.content(baseRecord.content)
 	.title('Second')
 	.withImages(

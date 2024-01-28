@@ -17,7 +17,7 @@ export type EntryRecord = {
 export const mapEntries = (rows: EntryRecord[]): Entry[] => {
 	const entryMap = new Map<number, EntryRecord[]>();
 	rows.forEach((row) => {
-		if (row.entryId) {
+		if (row.entryId !== null) {
 			entryMap.set(row.entryId, [...(entryMap.get(row.entryId) ?? []), row]);
 		}
 	});
