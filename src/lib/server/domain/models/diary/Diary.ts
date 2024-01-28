@@ -5,6 +5,7 @@ import type { UserId } from '$lib/server/domain/models/UserId';
 import {Gallery} from "$lib/server/domain/models/gallery/Gallery";
 import {GalleryId} from "$lib/server/domain/models/gallery/GalleryId";
 import { GalleryTitle } from '../gallery/GalleryTitle';
+import {Post} from "$lib/server/domain/models/gallery/Post";
 
 export class Diary {
 	public id: DiaryId;
@@ -55,7 +56,8 @@ export class Diary {
 		const galleryTitle = title ? new GalleryTitle(title) : new GalleryTitle(this.title)
 		return new Gallery(
 			GalleryId.create(),
-			galleryTitle
+			galleryTitle,
+			this.entries.map(Post.fromDiaryEntry)
 		)
 	}
 }

@@ -17,7 +17,7 @@ export const baseRecord: DiaryRecord = {
 	entryId: 0,
 	imageId: 'ca3321fe-5e3a-48d4-9356-d98579a258d9',
 	songId: '0kNrFAHWyp1ffdT6SslgAf',
-	entryTitle: 'Vaction in Andalusia',
+	entryTitle: 'Vacation in Andalusia',
 	url: 'https://open.spotify.com/track/0kNrFAHWyp1ffdT6SslgAf?si=8ba194b8033f4306'
 };
 

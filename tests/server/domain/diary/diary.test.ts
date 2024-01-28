@@ -1,6 +1,8 @@
 import {expect} from "vitest";
 import {aDiary} from "../../../fixtures";
 import {GalleryTitle} from "$lib/server/domain/models/gallery/GalleryTitle";
+import {Post} from "$lib/server/domain/models/gallery/Post";
+import {PostId} from "$lib/server/domain/models/gallery/PostId";
 
 describe("Diary", () => {
 
@@ -28,6 +30,23 @@ describe("Diary", () => {
             expect(gallery.title).toStrictEqual(new GalleryTitle(aDiary.title))
         })
 
-        test("")
+        test("copies over diary entries to gallery posts", () => {
+            const gallery = aDiary.publish()
+
+            const expectedPosts = [
+                new Post(
+                    new PostId(expect.any(String)),
+                    "Vacation in Andalusia",
+                    "This is the content of the entry"
+                ),
+                new Post(
+                    new PostId(expect.any(String)),
+                    "Second",
+                    "This is the content of the entry"
+                )
+            ]
+
+            expect(gallery.posts).toStrictEqual(expectedPosts)
+        })
     })
 })
