@@ -19,9 +19,12 @@ export const mapDiaries = (records: DiaryRecord[]): Diary[] => {
 	return Array.from(entityMap.values()).map(diaryMapper);
 };
 
+const hasEntry = (record: DiaryRecord): boolean => {
+	return record.entryId !== null && record.entryId !== undefined
+}
 export const diaryMapper = (records: DiaryRecord[]): Diary => {
 	const firstRecord = records[0];
-	const entries = mapEntries(records);
+	const entries = mapEntries(records.filter(hasEntry));
 	return new Diary(
 		new DiaryId(firstRecord.diaryId),
 		firstRecord.diaryTitle,
