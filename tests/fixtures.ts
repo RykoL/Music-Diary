@@ -2,9 +2,9 @@ import type { DiaryRecord } from '$lib/server/mapper/DiaryMapper';
 import { Entry } from '$lib/server/domain/models/diary/Entry';
 import { AttachedImage, ImageId } from '$lib/server/domain/models/Image';
 import { SpotifyId, SpotifySong, SpotifyURL } from '$lib/server/domain/models/SpotifySong';
-import {Diary} from "$lib/server/domain/models/diary/Diary";
-import {DiaryId} from "$lib/server/domain/models/diary/DiaryId";
-import {User} from "$lib/server/domain/models/User";
+import { Diary } from '$lib/server/domain/models/diary/Diary';
+import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
+import { User } from '$lib/server/domain/models/User';
 import { UserId } from '$lib/server/domain/models/UserId';
 
 export const baseRecord: DiaryRecord = {
@@ -63,15 +63,12 @@ export const aSecondEntry = Entry.builder()
 	)
 	.build();
 
-export const aUser = new User(
-	UserId.create()
-)
+export const aUser = new User(UserId.create());
 
-export const aDiary =
-	new Diary(
-		new DiaryId(baseRecord.diaryId),
-		"My first diary",
-		"A diary with all my important memories",
-		[aFirstEntry, aSecondEntry],
-		aUser.id
-	)
+export const aDiary = new Diary(
+	new DiaryId(baseRecord.diaryId),
+	'My first diary',
+	'A diary with all my important memories',
+	[aFirstEntry, aSecondEntry],
+	aUser.id
+);

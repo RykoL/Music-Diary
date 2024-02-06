@@ -10,7 +10,7 @@ test('maps diary id from record', () => {
 		diaryId: 'abc'
 	};
 
-	const expected = new Diary(new DiaryId('abc'), '', '', [], new UserId("abc"));
+	const expected = new Diary(new DiaryId('abc'), '', '', [], new UserId('abc'));
 	const actual = diaryMapper([record]);
 	expect(expected.id).toEqual(actual.id);
 });
@@ -21,7 +21,7 @@ test('maps diary title from record', () => {
 		diaryTitle: 'Some title'
 	};
 
-	const expected = new Diary(new DiaryId('abc'), 'Some title', '', [], new UserId("abc"));
+	const expected = new Diary(new DiaryId('abc'), 'Some title', '', [], new UserId('abc'));
 	const actual = diaryMapper([record]);
 	expect(expected.title).toEqual(actual.title);
 });
@@ -32,7 +32,13 @@ test('maps diary description from record', () => {
 		diaryDescription: 'Some description'
 	};
 
-	const expected = new Diary(new DiaryId('abc'), 'Some title', 'Some description', [], new UserId("abc"));
+	const expected = new Diary(
+		new DiaryId('abc'),
+		'Some title',
+		'Some description',
+		[],
+		new UserId('abc')
+	);
 	const actual = diaryMapper([record]);
 	expect(expected.description).toEqual(actual.description);
 });
@@ -43,7 +49,7 @@ test('maps entry from record', () => {
 		baseRecord.diaryTitle,
 		baseRecord.diaryDescription,
 		[aFirstEntry],
-		new UserId("abc")
+		new UserId('abc')
 	);
 
 	const actual = diaryMapper([baseRecord]);
@@ -56,7 +62,7 @@ test('maps multiple entries from record without duplicates', () => {
 		baseRecord.diaryTitle,
 		baseRecord.diaryDescription,
 		[aFirstEntry, aSecondEntry],
-		new UserId("abc")
+		new UserId('abc')
 	);
 
 	const records: Array<DiaryRecord> = [
