@@ -2,10 +2,10 @@ import { Entry, type EntryId } from '$lib/server/domain/models/diary/Entry';
 import type { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 import type { EntryDraft } from '$lib/server/domain/inbound/EntryDraft';
 import type { UserId } from '$lib/server/domain/models/UserId';
-import {Gallery} from "$lib/server/domain/models/gallery/Gallery";
-import {GalleryId} from "$lib/server/domain/models/gallery/GalleryId";
+import { Gallery } from '$lib/server/domain/models/gallery/Gallery';
+import { GalleryId } from '$lib/server/domain/models/gallery/GalleryId';
 import { GalleryTitle } from '../gallery/GalleryTitle';
-import {Post} from "$lib/server/domain/models/gallery/Post";
+import { Post } from '$lib/server/domain/models/gallery/Post';
 
 export class Diary {
 	public id: DiaryId;
@@ -53,11 +53,7 @@ export class Diary {
 	}
 
 	public publish(title?: string): Gallery {
-		const galleryTitle = title ? new GalleryTitle(title) : new GalleryTitle(this.title)
-		return new Gallery(
-			GalleryId.create(),
-			galleryTitle,
-			this.entries.map(Post.fromDiaryEntry)
-		)
+		const galleryTitle = title ? new GalleryTitle(title) : new GalleryTitle(this.title);
+		return new Gallery(GalleryId.create(), galleryTitle, this.entries.map(Post.fromDiaryEntry));
 	}
 }

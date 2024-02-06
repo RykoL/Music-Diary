@@ -13,9 +13,15 @@ export class ImageId {
 export type Image = AttachedImage | UnattachedImage;
 
 export class AttachedImage {
-	constructor(public id: ImageId, public publicURL: URL) {}
+	constructor(
+		public id: ImageId,
+		public publicURL: URL
+	) {}
 }
 
 export class UnattachedImage {
-	constructor(public id: ImageId, public file: File) {}
+	constructor(
+		public id: ImageId,
+		public file: File
+	) {}
 }

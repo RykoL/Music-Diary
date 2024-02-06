@@ -1,5 +1,5 @@
 import { ValueObject } from '$lib/server/domain/models/ValueObject';
-import {randomUUID} from "node:crypto";
+import { randomUUID } from 'node:crypto';
 
 export class UserId extends ValueObject<string> {
 	constructor(value: string) {
@@ -7,6 +7,6 @@ export class UserId extends ValueObject<string> {
 	}
 
 	public static create(): UserId {
-		return new UserId(randomUUID())
+		return new UserId(randomUUID());
 	}
 }

@@ -8,7 +8,7 @@ import { diaryMapper, type DiaryRecord, mapDiaries } from '$lib/server/mapper/Di
 import type { DiaryPersistence } from '$lib/server/domain/ports/outbound/DiaryPersistance';
 import type { EntryPersistence } from '$lib/server/domain/ports/outbound/EntryPersistence';
 import type { UserId } from '$lib/server/domain/models/UserId';
-import type {UnattachedImage} from "$lib/server/domain/models/Image";
+import type { UnattachedImage } from '$lib/server/domain/models/Image';
 
 export class DiaryRepository implements DiaryPersistence, EntryPersistence {
 	private db: Database;

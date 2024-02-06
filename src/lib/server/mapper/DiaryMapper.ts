@@ -20,8 +20,8 @@ export const mapDiaries = (records: DiaryRecord[]): Diary[] => {
 };
 
 const hasEntry = (record: DiaryRecord): boolean => {
-	return record.entryId !== null && record.entryId !== undefined
-}
+	return record.entryId !== null && record.entryId !== undefined;
+};
 export const diaryMapper = (records: DiaryRecord[]): Diary => {
 	const firstRecord = records[0];
 	const entries = mapEntries(records.filter(hasEntry));
@@ -30,6 +30,6 @@ export const diaryMapper = (records: DiaryRecord[]): Diary => {
 		firstRecord.diaryTitle,
 		firstRecord.diaryDescription,
 		entries,
-		new UserId("")
+		new UserId('')
 	);
 };

@@ -4,7 +4,7 @@ import { DiaryRepository } from '$lib/server/infrastructure/DiaryRepository';
 import { DatabaseFactory } from '$lib/server/infrastructure/DatabaseFactory';
 import { entryToPresentation } from '$lib/server/domain/mapper/EntryMapper';
 import { EntryId } from '$lib/server/domain/models/diary/Entry';
-import {error, fail, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import { UpdateEntryRequest } from '$lib/server/domain/inbound/UpdateEntry';
 import { DiaryId } from '$lib/server/domain/models/diary/DiaryId';
 

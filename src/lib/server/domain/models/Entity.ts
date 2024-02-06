@@ -1,6 +1,3 @@
-
-
 export class Entity<T> {
-    constructor(public id: T) {
-    }
+	constructor(public id: T) {}
 }

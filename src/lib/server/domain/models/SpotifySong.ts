@@ -17,7 +17,11 @@ export class SpotifyId {
 	constructor(public value: string) {}
 }
 export class SpotifySong {
-	constructor(public id: SpotifyId, public spotifyURL: SpotifyURL, public html: string) {}
+	constructor(
+		public id: SpotifyId,
+		public spotifyURL: SpotifyURL,
+		public html: string
+	) {}
 
 	isSameSong(id: SpotifyId): boolean {
 		return this.id.value === id.value;

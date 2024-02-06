@@ -1,6 +1,6 @@
 import type { Entry } from '$lib/server/domain/models/diary/Entry';
 import type { EntryListResponse, EntryPresentation } from '$lib/models/EntryResponse';
-import type {AttachedImage} from "$lib/server/domain/models/Image";
+import type { AttachedImage } from '$lib/server/domain/models/Image';
 
 export const entryToPresentation = (entry: Entry): EntryPresentation => {
 	return {
