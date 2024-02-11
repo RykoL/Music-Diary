@@ -30,7 +30,7 @@
 		</button>
 	</div>
 </Navbar>
-<section class="container flex flex-col gap-5 mt-2">
+<section class="container flex flex-col gap-5 lg:flex-row lg:flex-wrap lg:mx-auto lg:gap-0.5 lg:justify-evenly mt-2">
 	{#if data.entries.length === 0}
 		<div class="prose mx-auto px-10">
 			<p>It looks pretty empty in here. How about you create a new entry.</p>
