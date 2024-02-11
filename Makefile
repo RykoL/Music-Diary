@@ -1,8 +1,10 @@
 
-.PHONY=precommit
+.PHONY=precommit format
 
 pre-commit:
-	npm run lint
-	npm run check
+	NODE_ENV=test npm run check
 	npm run test
-	npm run e2
+	npm run e2e
+
+format:
+	npm run format

@@ -9,7 +9,7 @@
 	const previewImageURL = entry.imageURLs[0] ?? 'https://picsum.photos/400/200';
 </script>
 
-<article class="card w-96 bg-base-100 shadow-xl card-bordered card-visibility mx-auto">
+<article class="card w-96 bg-base-100 shadow-xl card-bordered card-visibility mx-auto overflow-hidden">
 	<div class="absolute top-2 right-2 z-50">
 		<form action="/app/diary/{diaryId}/entry/{entry.id}?/delete" method="post" class="z-50">
 			<input type="hidden" name="diaryId" value="" />
@@ -23,7 +23,7 @@
 			<img
 				loading="lazy"
 				src={previewImageURL}
-				class="image-full"
+				class="image-full bg-base-100"
 				alt="description of whats happening in here"
 			/>
 		</figure>

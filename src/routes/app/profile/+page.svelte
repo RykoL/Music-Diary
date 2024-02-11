@@ -3,11 +3,12 @@
 	import { Menu } from 'lucide-svelte';
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
+	import NavigationTitle from "$lib/components/NavigationTitle.svelte";
 </script>
 
 <Navbar>
 	<div class="prose col-start-2">
-		<h3>Your profile</h3>
+		<NavigationTitle>Your profile</NavigationTitle>
 	</div>
 	<div class="flex justify-end">
 		<details class="dropdown dropdown-end">

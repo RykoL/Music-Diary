@@ -15,7 +15,7 @@ const getProviders = () => {
 					username: { label: 'Username', type: 'text' },
 					password: { label: 'Password', type: 'password' }
 				},
-				async authorize(credentials, req) {
+				async authorize(_credentials, _req) {
 					return {
 						id: '4b40c3b2-c08f-4e88-8e06-549e8aed5f5b',
 						name: 'Peter Panski'

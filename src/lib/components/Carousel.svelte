@@ -38,6 +38,6 @@
 			</div>
 		{/each}
 	{:else}
-		<img src="https://picsum.photos/400/200" alt="showing an entry" class="w-full" />
+		<img src="https://picsum.photos/400/200" alt="showing an entry" class="w-full rounded-lg" />
 	{/if}
 </div>

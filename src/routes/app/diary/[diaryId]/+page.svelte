@@ -5,6 +5,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { SquarePen } from 'lucide-svelte';
+	import NavigationTitle from "$lib/components/NavigationTitle.svelte";
 
 	let dialog: HTMLDialogElement;
 
@@ -16,7 +17,9 @@
 
 <Navbar>
 	<Link href="/app/diaries">Back</Link>
-	<a class="btn btn-ghost normal-case text-xl col-start-2" href="/app/diaries">My music diary</a>
+	<a class="btn btn-ghost normal-case text-xl col-start-2" href="/app/diaries">
+		<NavigationTitle>My music diary</NavigationTitle>
+	</a>
 	<div class="flex justify-end col-start-3">
 		<button
 			class="btn btn-circle btn-primary btn-md"
